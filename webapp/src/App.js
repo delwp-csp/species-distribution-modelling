@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Heading({children, color}) {
-  return <h1 style={{color}}>{children}</h1>
+function Heading({ children, color }) {
+  return <h1 style={{ color }}>{children}</h1>
 }
 
 class TickTock extends React.Component {
@@ -16,14 +16,14 @@ class TickTock extends React.Component {
   }
 
   componentDidMount() {
-    this.i = setInterval(()=>this.setState({n: this.state.n + 1}), 1000)
+    this.i = setInterval(() => this.setState({ n: this.state.n + 1 }), 1000)
   }
 
   componentWillUnmount() {
     clearInterval(this.i)
   }
 }
-  
+
 
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
     <div>
       Test
       <Heading color="green">Hello</Heading>
-      <p><TickTock/> seconds have passed since you loaded the page</p>
+      <p><TickTock /> seconds have passed since you loaded the page</p>
     </div>
   )
 }
