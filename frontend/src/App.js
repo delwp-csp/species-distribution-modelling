@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { CardList } from './components/card-list/card-list.component';
+// import { AddButton } from './components/button/button.component';
 
 // function Heading({ children, color }) {
 //   return <h1 style={{ color }}>{children}</h1>
@@ -14,8 +15,17 @@ class App extends Component {
         {
           id: 1,
           name: 'Stylidium graminifolium',
-          description: "Stylidium graminifolium, the grass triggerplant, is a dicotyledonous plant that belongs to the genus Stylidium (family Stylidiaceae). This species used to belong to the Stylidium graminifolium complex, but the name was conserved for this single species when two others were split from the complex and introduced as new species in 2001.",
-          image: '../img/gramini.jpg'
+          description: "Stylidium graminifolium, the grass triggerplant, is a dicotyledonous plant that belongs to the genus Stylidium (family Stylidiaceae). ",
+        },
+        {
+          id: 2,
+          name: 'Climacteris affinis',
+          description: 'The White-browed Treecreeper (Climacteris affinis) is the smallest of the Australo-papuan Treecreepers and sole family member adapted to arid environments.'
+        },
+        {
+          id: 3,
+          name: 'Litoria ewingi',
+          description: ' is a species of tree frog native to Australia: most of southern Victoria, eastern South Australia, southern New South Wales from about Ulladulla'
         }
 
       ]
@@ -28,13 +38,14 @@ class App extends Component {
     return (
       <div className='App'>
         <h1>DWELP Species Modelling</h1>
+        {/* <AddButton /> */}
         <CardList species={this.state.species} />
       </div>
     )
   }
 
   componentDidMount() {
-    // this.i = setInterval(() => this.setState({ n: this.state.n + 1 }), 1000)
+
   }
 
   componentWillUnmount() {
