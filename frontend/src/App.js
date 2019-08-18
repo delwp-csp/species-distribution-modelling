@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { CardList } from './components/card-list/card-list.component';
-// import { AddButton } from './components/button/button.component';
+import AddButton from './components/button/button.component';
 
 // function Heading({ children, color }) {
 //   return <h1 style={{ color }}>{children}</h1>
@@ -15,17 +15,17 @@ class App extends Component {
         {
           id: 1,
           name: 'Stylidium graminifolium',
-          description: "Stylidium graminifolium, the grass triggerplant, is a dicotyledonous plant that belongs to the genus Stylidium (family Stylidiaceae). ",
+          description: "Stylidium graminifolium, the grass triggerplant, is a dicotyledonous plant that belongs to the genus Stylidium (family Stylidiaceae). ", image: '../img/gramini.jpg'
         },
         {
           id: 2,
           name: 'Climacteris affinis',
-          description: 'The White-browed Treecreeper (Climacteris affinis) is the smallest of the Australo-papuan Treecreepers and sole family member adapted to arid environments.'
+          description: 'The White-browed Treecreeper (Climacteris affinis) is the smallest of the Australo-papuan Treecreepers and sole family member adapted to arid environments.', image: '../img/gramini.jpg'
         },
         {
           id: 3,
           name: 'Litoria ewingi',
-          description: ' is a species of tree frog native to Australia: most of southern Victoria, eastern South Australia, southern New South Wales from about Ulladulla'
+          description: ' is a species of tree frog native to Australia: most of southern Victoria, eastern South Australia, southern New South Wales from about Ulladulla', image: '../img/gramini.jpg'
         }
 
       ]
@@ -38,7 +38,8 @@ class App extends Component {
     return (
       <div className='App'>
         <h1>DWELP Species Modelling</h1>
-        {/* <AddButton /> */}
+        <AddButton />
+        {/* <AddIcon /> */}
         <CardList species={this.state.species} />
       </div>
     )
