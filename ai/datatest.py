@@ -1,30 +1,50 @@
-import geopandas as gpd
-from shapely.geometry import Point
-import matplotlib.pyplot as plt
-
-fig, ax = plt.subplots(figsize=(10, 5))
-
-built_up_area = gpd.read_file("../raw_dataset/VMLITE/VMLITE_BUILT_UP_AREA.shp")
-# -37.821734, 144.970905 is a location within melbourne - should be built up
-melbourne_location = Point([144.970905, -37.821734])
+import sys
+try:
+    from osgeo import ogr, osr, gdal
+except:
+    sys.exit('ERROR: cannot find GDAL/OGR modules')
 
 
-# -38.030268, 144.884119 is in the middle of the bay - not built up
-bay_location = Point([144.884119, -38.030268])
 
 
-# Convert the locations into geopanda objects
-melbourne_location = gpd.GeoSeries(melbourne_location, 
-                 crs="+init=epsg:4326").to_crs("+init=epsg:3111")
+shapefile = ogr.Open("../raw_dataset/VMLITE/VMLITE_BUILT_UP_AREA.shp")
+
+layer = shapefile.GetLayer()
 
 
-bay_location = gpd.GeoSeries(bay_location, 
-                 crs="+init=epsg:4326").to_crs("+init=epsg:3111")
+latlong = osr.SpatialReference()
+latlong.ImportFromEPSG(4326)
 
-built_up_area.plot(ax=ax)
+vicmap = osr.SpatialReference()
+vicmap.ImportFromEPSG(3111)
 
-melbourne_location.plot(ax=ax, color="springgreen", marker="*",markersize=45)
+melbourne = ogr.Geometry(ogr.wkbPoint)
+melbourne.AddPoint(-37.8136, 144.9631)
 
-bay_location.plot(ax=ax, color="red", marker="*", markersize=45)
+bay = ogr.Geometry(ogr.wkbPoint)
+bay.AddPoint(-38.024761, 144.865100)
 
-plt.show()
+transform = osr.CoordinateTransformation(latlong, vicmap)
+
+print("Lat long")
+print(melbourne.ExportToWkt())
+print(bay.ExportToWkt())
+
+melbourne.Transform(transform)
+bay.Transform(transform)
+
+print("Transformed")
+print(melbourne.ExportToWkt())
+print(bay.ExportToWkt())
+
+melbourneBuiltUp = False
+bayBuiltUp = False
+
+for feature in layer:
+    geom = feature.GetGeometryRef()
+
+    if melbourne.Within(geom): melbourneBuiltUp = True
+    if bay.Within(geom): bayBuiltUp = True
+
+print("Melbourne is " + ("" if melbourneBuiltUp else "not ") + "in a built up area")
+print("The ocean is " + ("" if bayBuiltUp else "not ") + "in a built up area")
