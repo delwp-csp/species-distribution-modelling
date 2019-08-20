@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Form from '../form/form.component';
 
 //this can be a functional component.
 class Add_Species extends Component {
@@ -8,8 +9,12 @@ class Add_Species extends Component {
 
     render(){
         return(
-            <h1>Add New Species</h1>
-        )
+            <div>
+              <h1>Add New Species</h1>
+              <Form />
+            </div>
+            
+        );
     }
 }
 
