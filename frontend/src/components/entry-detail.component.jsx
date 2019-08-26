@@ -20,7 +20,6 @@ const EntryDetail = ({specieId}) => {
       </div>
     </div>
       
-
     )
 }
 

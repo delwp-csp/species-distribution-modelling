@@ -1,3 +1,14 @@
+.report{
+  display:flex;
+  flex-direction: column;
+}
+
+.entries{
+  display: flex;
+  flex-direction: row;
+}
+
+
 .entry-container {
   display: flex;
   flex-direction: row;
@@ -20,4 +31,8 @@ p {
 
 .entry-container:hover {
   transform: scale(1.05);
+}
+
+.detail{
+  margin-left: 100;
 }
