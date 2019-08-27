@@ -33,7 +33,7 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function SimpleTable(props) {
+export default function SimpleTable({entries}) {
   const classes = useStyles();
   // const rows = props;
 
@@ -48,14 +48,14 @@ export default function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.map(row => (
+          {entries.map(row => (
             <TableRow key={row.name}>
               {/* <TableCell component="th" scope="row">
                 {row.name}
               </TableCell> */}
-              <TableCell align="left">{props.entryId}</TableCell>
-              <TableCell align="left">{props.userId}</TableCell>
-              <TableCell align="left">{props.reliability}</TableCell>
+              <TableCell align="left">{row.entryId}</TableCell>
+              <TableCell align="left">{row.userId}</TableCell>
+              <TableCell align="left">{row.reliability}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -15,9 +15,11 @@ class Report extends React.Component {
 
   componentDidMount() {
     //Placeholder json data
-    fetch("https://jsonplaceholder.typicode.com/albums")
-      .then(response => response.json())
-      .then(albums => this.setState({ entries: albums }));
+    this.setState({entries: [
+      {entryId: 1, userId: 1, reliability: 0.9},
+      {entryId: 2, userId: 1, reliability: 0.95},
+      {entryId: 3, userId: 2, reliability: 0.25}
+    ]})
   }
 
   handleChange(){
@@ -37,7 +39,7 @@ class Report extends React.Component {
           // <Entry key={entry.id} props={this.state.entries}/>
         ))} */}
 
-        <SimpleTable  props={this.state.entries}/>
+        <SimpleTable  entries={this.state.entries}/>
         {console.log(this.state.entries)}
       </div>
     );
