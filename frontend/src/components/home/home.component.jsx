@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { CardList } from '../card-list/card-list.component';
 import AddButton from '../button/button.component';
-import './home.styles.css';
 
 class Home extends Component {
   constructor(props) {
@@ -40,9 +39,8 @@ class Home extends Component {
     return (
     <div>
         <h1>DWELP Species Modelling</h1>
-        <div style={{textAlign: "right"}}>
-              <AddButton className = 'addButton'/>
-              </div>
+
+        <AddButton />
         <CardList species={this.state.species} />
     </div>
     )
