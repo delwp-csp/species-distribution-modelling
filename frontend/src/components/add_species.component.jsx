@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import Form from '../form/form.component';
-
+function Form() { return null}
 //this can be a functional component.
 class Add_Species extends Component {
     // constructor(props){

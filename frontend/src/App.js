@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Home from "./components/home/home.component";
-import Add_Species from "./components/Add_Species/add_species.component";
-import Report from "./components/report/report.component";
-import ListElement from "./components/list/list.component";
+import Home from "./components/home.component";
+import Add_Species from "./components/add_species.component";
+import Report from "./components/report.component";
+import ListElement from "./components/list.component";
 
 // https://www.styled-components.com/
 
