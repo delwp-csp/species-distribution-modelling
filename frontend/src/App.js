@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Home from "./components/home.component";
 import Add_Species from "./components/add_species.component";
 import Report from "./components/report.component";
-import ListElement from "./components/list.component";
+import {Route} from 'react-router-dom';
 
 // https://www.styled-components.com/
 
@@ -37,7 +37,7 @@ function App() {
   return (
     <div className="App">
       {page === 'home' && <Home metadata={metadata}/>}
-      {/* <Add_Species /> */}
+      {page === 'add-species' && <Add_Species metadata={metadata}/>}      
       {page === 'report' && <Report metadata={metadata}/>}
     </div>
   );
