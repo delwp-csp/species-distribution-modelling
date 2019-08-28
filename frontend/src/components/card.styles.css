@@ -3,7 +3,7 @@
   flex-direction: row;
   /* border: 1px solid grey; */
   border-radius: 5px;
-  padding: 40px;
+  background-color: white;
   cursor: pointer;
   -moz-osx-font-smoothing: grayscale;
   backface-visibility: hidden;
@@ -15,7 +15,9 @@
 .card-info {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding-top:15px;
+  padding-left: 30px;
+  padding-right: 40px;
 }
 
 .card-container:hover {
@@ -23,11 +25,14 @@
 }
 
 .card-container img {
-  height: 180px;
-  width: 180px;
-  margin: 0 auto;
+  height: 300px;
+  width: 300px;
+  
 }
 
 .card-container p{
   margin:0;
+  font-size: 15px;
+  color: rgb(71, 71, 71);
+  font-style: italic;
 }

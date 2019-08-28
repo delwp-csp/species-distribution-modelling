@@ -8,7 +8,6 @@ export const Card = (props) => (
     
 
     <div className='card-info'>
-      {/* <img src={Image} alt="" /> */}
 
       <h2> {props.specie.name} </h2>
       <p>{props.specie.description}</p>
