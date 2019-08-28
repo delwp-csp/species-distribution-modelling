@@ -10,7 +10,6 @@ class Add_Species extends Component {
         return(
             <div>
               <h1>Add New Species</h1>
-              <Form />
             </div>
             
         );

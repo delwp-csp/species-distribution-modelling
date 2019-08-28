@@ -16,7 +16,7 @@ export default function AddButton() {
 
   return (
     <div>
-      <Button variant="contained" color="primary" className={classes.button}>
+      <Button variant="contained" color="primary" className={classes.button} >
         Add new species →
       </Button>
     </div>
