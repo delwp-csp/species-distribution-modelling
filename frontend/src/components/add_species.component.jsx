@@ -23,7 +23,7 @@ class Add_Species extends Component {
             <MultiLineInput fieldName='Description' />
           </div>
         </div>
-        <div className='button-container'>
+        <div className='button-container' onClick = {()=> this.props.history.push('/')}>
           <AddButton className='addButton' buttonText='Save' />
         </div>
       </div>
