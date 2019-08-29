@@ -11,13 +11,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AddButton() {
+export default function AddButton({buttonText}) {
   const classes = useStyles();
 
   return (
     <div>
       <Button variant="contained" color="primary" className={classes.button} >
-        Add new species →
+        {buttonText}
       </Button>
     </div>
   );
