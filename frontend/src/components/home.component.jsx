@@ -21,13 +21,7 @@ class Home extends Component {
       <div className='home'>
         <h1>DWELP Species Modelling</h1>
         <div className='button-container' onClick = {()=> this.props.history.push('/add-species')}>
-          {console.log(this.props)}
-          {/* <button onClick = {()=> this.props.history.push('/add-species')}>Button</button> */}
           <AddButton className='addButton' buttonText='Add new species →' />
-
-          {/* <AddButton className='addButton' onClick={() => window.location.hash = `#/add`} /> */}
-          {/* <Card onClick={() => window.location.hash = `#/report/${specie.id}`} key={specie.id} specie={specie} /> */}
-
         </div>
         <CardList species={this.state.species} />
       </div>
