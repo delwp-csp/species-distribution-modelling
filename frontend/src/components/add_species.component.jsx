@@ -6,10 +6,7 @@ import AddButton from './button.component';
 
 //this can be a functional component.
 class Add_Species extends Component {
-  // constructor(props){
-  //     super(props);
-  // }
-
+ 
   render() {
     return (
       <div className='add-species'>

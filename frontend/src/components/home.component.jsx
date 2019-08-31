@@ -23,7 +23,7 @@ class Home extends Component {
         <div className='button-container' onClick = {()=> this.props.history.push('/add-species')}>
           <AddButton className='addButton' buttonText='Add new species →' />
         </div>
-        <CardList species={this.state.species} />
+        <CardList props = {this.props} species={this.state.species} />
       </div>
     )
   }

@@ -34,6 +34,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/add-species" component={Add_Species} />
+          <Route path = "/report/:specieId" component = {Report} />
         </Switch>
       </BrowserRouter>
 
