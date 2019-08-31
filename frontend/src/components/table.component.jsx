@@ -11,29 +11,20 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '50%',
     marginTop: theme.spacing(3),
-    overflowX: 'auto',
+    // overflowX: 'auto',
   },
   table: {
     minWidth: 650,
     padding: 30,
   },
+  tableRow:{
+    padding:100,
+  },
   
   
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-export default function SimpleTable({entries}) {
+export default function SimpleTable({entries, selectRow}) {
   const classes = useStyles();
   // const rows = props;
 
@@ -49,10 +40,7 @@ export default function SimpleTable({entries}) {
         </TableHead>
         <TableBody>
           {entries.map(row => (
-            <TableRow key={row.name}>
-              {/* <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell> */}
+            <TableRow className='entry' key={row.entryId} onClick={() => selectRow(row.entryId)}>
               <TableCell align="left">{row.entryId}</TableCell>
               <TableCell align="left">{row.userId}</TableCell>
               <TableCell align="left">{row.reliability}</TableCell>
