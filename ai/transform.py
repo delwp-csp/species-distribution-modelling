@@ -19,7 +19,8 @@ def latlong2vicmap(coords):
     geo.Transform(LL2VMTransform)
     point = geo.GetPoint(0)
 
-    return (point[0], point[1])
+    return (int(point[0]), int(point[1]))
+
 
 
 def vicmap2latlong(coords):
