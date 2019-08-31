@@ -1,11 +1,11 @@
-.home h1{
-  margin:0;
+.page-title{
+  margin-bottom:70px;
 }
 
-.button-container{
-  text-align:right;
-  margin-right: 20px;
-  margin-bottom: 30px;
+.home .button-container{
+  position: absolute;
+  top: 50px;
+  right:100px; 
 }
 
 

@@ -19,7 +19,7 @@ class Home extends Component {
   render() {
     return (
       <div className='home'>
-        <h1>DWELP Species Modelling</h1>
+        <h1 className='page-title'>DWELP Species Modelling</h1>
         <div className='button-container' onClick = {()=> this.props.history.push('/add-species')}>
           <AddButton className='addButton' buttonText='Add new species →' />
         </div>

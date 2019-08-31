@@ -3,7 +3,6 @@ import React from 'react';
 const EntryDetail = ({specieId}) => {
   let entryDetail = require('../detail-data.json');
   const specieDetail = entryDetail[specieId-1];
-  console.log(entryDetail);
   return (
     <div>
       <div className='detail'>

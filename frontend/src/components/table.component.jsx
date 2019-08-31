@@ -30,7 +30,8 @@ export default function SimpleTable({entries, selectRow}) {
   // const rows = props;
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root
+    }>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>

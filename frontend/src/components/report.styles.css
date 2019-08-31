@@ -9,3 +9,9 @@
 .entryDetail-container{
   margin-left: 50px;
 } 
+
+.report .button-container{
+  position: absolute;
+  top: 50px;
+  right:100px;   
+}
