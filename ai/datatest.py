@@ -4,7 +4,7 @@ try:
 except:
     sys.exit('ERROR: cannot find GDAL/OGR modules')
 
-
+import csv
 
 
 shapefile = ogr.Open("../raw_dataset/VMLITE/VMLITE_BUILT_UP_AREA.shp")
@@ -26,25 +26,51 @@ bay.AddPoint(-38.024761, 144.865100)
 
 transform = osr.CoordinateTransformation(latlong, vicmap)
 
-print("Lat long")
-print(melbourne.ExportToWkt())
-print(bay.ExportToWkt())
+#print("Lat long")
+#print(melbourne.ExportToWkt())
+#print(bay.ExportToWkt())
 
 melbourne.Transform(transform)
 bay.Transform(transform)
 
-print("Transformed")
-print(melbourne.ExportToWkt())
-print(bay.ExportToWkt())
+#print("Transformed")
+#print(melbourne.ExportToWkt())
+#print(bay.ExportToWkt())
 
-melbourneBuiltUp = False
-bayBuiltUp = False
+melbourne.InBuiltUpArea = False
+bay.InBuiltUpArea = False
 
+
+points = []
+print("Loading data...")
+with open('../dataset/Common_Beard-heath.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        point = ogr.Geometry(ogr.wkbPoint)
+        point.AddPoint(float(row['LATITUDEDD_NUM']), float(row['LONGITUDEDD_NUM']))
+        #print(point.ExportToWkt())
+        point.Transform(transform)
+        #print(point.ExportToWkt())
+        point.InBuiltUpArea = False
+        points.append(point)
+
+#points.append(melbourne)
+#points.append(bay)
+
+print("Checking if in built up area")
 for feature in layer:
     geom = feature.GetGeometryRef()
+    for point in points:
+        if point.Within(geom):
+            point.InBuiltUpArea = True
 
-    if melbourne.Within(geom): melbourneBuiltUp = True
-    if bay.Within(geom): bayBuiltUp = True
 
-print("Melbourne is " + ("" if melbourneBuiltUp else "not ") + "in a built up area")
-print("The ocean is " + ("" if bayBuiltUp else "not ") + "in a built up area")
+idx = 0
+for point in points:
+    if (point.InBuiltUpArea):
+        print("Point #" + str(idx) + " is in a built up area")
+    else:
+        pass
+        #print("Point #" + str(idx) + " is not in a built up area")
+
+    idx = idx + 1
