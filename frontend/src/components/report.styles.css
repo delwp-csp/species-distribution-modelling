@@ -1,3 +1,11 @@
 .report h1{
   margin:0
 }
+
+.report-container{
+  padding-top: 50px;
+}
+
+.entryDetail-container{
+  margin-left: 50px;
+} 

@@ -1,19 +1,19 @@
 [
   {
     "id": "1",
-    "siteName": "Junction of Snobs Creek",
+    "siteName": "Details entry 1",
     "coSys": "xxxxxxxxxxxx",
     "spatialAccuracy": "1"
   },
   {
     "id": "2",
-    "siteName": "Junction of Snobs Creek",
+    "siteName": "Details of entry 2",
     "coSys": "xxxxxxxxxxxx",
     "spatialAccuracy": "2"
   },
   {
     "id": "3",
-    "siteName": "Junction of Snobs Creek",
+    "siteName": "details of entry 3",
     "coSys": "xxxxxxxxxxxx",
     "spatialAccuracy": "3"
   },

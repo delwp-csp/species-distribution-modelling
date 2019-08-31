@@ -1,7 +1,9 @@
   import React from 'react';
-  import Entry from './entry.component';
+  import EntryDetail from './entry-detail.component'
   import SimpleTable from './table.component';
+  import PaperSheet from './paper-sheet.component'
   import './report.styles.css'
+  
 
   class Report extends React.Component {
     constructor() {
@@ -29,6 +31,14 @@
     
 
     render() {
+      let  entryDetail;
+
+      if (this.state.selectedRow != 'none'){
+        entryDetail = <EntryDetail specieId = {this.state.selectedRow}/>
+      }else{
+        entryDetail = <p></p>
+      }
+      console.log(entryDetail);
       return (
         <div className='report'>
           <h1>Report</h1>
@@ -38,11 +48,15 @@
 
             // <Entry key={entry.id} props={this.state.entries}/>
           ))} */}
-          <div style={{display: 'flex', flexFlow: 'row'}}>
-
-          <SimpleTable selectRow={selectedRow => this.setState({selectedRow})} entries={this.state.entries}/>
-          <p>Hello {this.state.selectedRow}</p>
+          <div className = 'report-container' style={{display: 'flex', flexFlow: 'row'}}>
+            <SimpleTable selectRow={selectedRow => this.setState({selectedRow})} entries={this.state.entries}/>
+            {/* <p>Hello {this.state.selectedRow}</p> */}
+            <div className = 'entryDetail-container'>
+            {entryDetail}
+            <PaperSheet/>
+            </div>
           </div> 
+
 
         </div>
       );
