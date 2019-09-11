@@ -11,22 +11,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 // }
 
 function App() {
-  // const currentPage = this.state.currentPage;
-  // const [hash, setHash] = React.useState(window.location.hash)
-  // React.useEffect(() => {
-  //   function handler() {
-  //     setHash(window.location.hash)
-  //   }
-
-  //   window.addEventListener('hashchange', handler)
-  //   return () => window.removeEventListener('hashchange', handler)
-  // },[])
-  // const matches = hash.match(/#\/([A-Za-z-]*)\/?(.*)/)
-  // let page
-  // if (!matches) page = 'home'
-  // else page = matches[1]
-  // const metadata = matches && matches[2]
-  // console.log('metadata', metadata)
 
   return (
     <div className="App">
