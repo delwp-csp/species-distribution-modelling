@@ -1,24 +1,33 @@
 from osgeo import ogr, osr, gdal
-from os.path import basename
+from pathlib import Path
+import pandas as pd
 
-def ProcessPoints(points, fname):
+def conv_to_point(row):
+    geo = ogr.Geometry(ogr.wkbPoint)
+    geo.AddPoint(row['vic_x'], row['vic_y'])
+    geo.InShape = False
+    return geo
+
+def ProcessPoints(dataframe, fname):
     shapefile = ogr.Open(fname)
     layer = shapefile.GetLayer()
-    new_points = []
 
-    for point in points:
-        geo = ogr.Geometry(ogr.wkbPoint)
-        geo.AddPoint(point[0], point[1])
-        geo.InShape = False
-        new_points.append(geo)
+    column = Path(fname).stem
+
+    points_series = dataframe.apply(conv_to_point, axis=1)
+    points = points_series.values
 
     for feature in layer:
         geo = feature.GetGeometryRef()
-        for point in new_points:
+        for point in points:
             if point.Within(geo):
                 point.InShape = True
 
-    return list(map(lambda x: x.InShape, new_points))
+
+    series = pd.Series(map(lambda x: x.InShape, points), index=points_series.index)
+    dataframe[column] = series
+
+    return dataframe
 
 
 if __name__ == "__main__":
