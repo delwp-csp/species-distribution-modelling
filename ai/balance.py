@@ -6,7 +6,7 @@ try:
     
     from collections import Counter
 
-    import filter_columns_pd as f
+    import filter_columns as f
 
 except:
     print("Failed to load packages, make sure your conda environment is setup correctly")
