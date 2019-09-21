@@ -42,7 +42,7 @@ class Add_Species extends Component {
         <div className='details-container'>
           <h3>Specie Details</h3>
           <div className='details-form'>
-            <InputField id="scientific_name" fieldName={'Scientific Name'} onChange={this.handleChange} autoFocus />
+            <InputField id="scientific_name" fieldName={'Scientific Name'} onChange={this.handleChange} autoFocu  s />
             <InputField id="common_name" fieldName={'Common Name'} onChange={this.handleChange}/>
             <MultiLineInput id="description" fieldName='Description' onChange={this.handleChange} />
           </div>

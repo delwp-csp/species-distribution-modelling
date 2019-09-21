@@ -1,1 +1,10 @@
-{"scientific_name":"asdf","common_name":"asdf","description":"new specie"}
+[{
+  "scientific_name": "init",
+  "common_name": "",
+  "description": ""
+},
+{
+  "scientific_name": "new",
+  "common_name": "",
+  "description": ""
+}]
