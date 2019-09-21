@@ -4,7 +4,9 @@ import InputField from './input-field.component';
 import MultiLineInput from './multiline-input.component';
 import AddButton from './button.component';
 import superagent from 'superagent';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import {DropzoneArea} from 'material-ui-dropzone';
+
 
 //this can be a functional component.
 class Add_Species extends Component {
@@ -14,38 +16,51 @@ class Add_Species extends Component {
 
     this.state = {
 
-      scientific_name:"",
-      common_name:"",
-      description:"",
+      scientific_name: "",
+      common_name: "",
+      description: "",
+      files: null,
     }
   }
 
   submitPost = () => {
     let { history } = this.props;
     history.push("/");
-    superagent('post', '/').send({scientific_name: this.state.scientific_name, common_name: this.state.common_name, description:this.state.description }).then((data) => {
+    superagent('post', '/').send({ scientific_name: this.state.scientific_name, common_name: this.state.common_name, description: this.state.description }).then((data) => {
       console.log("The server has recieved", data.body);
-    })
+    });
+    superagent('post','/upload').attach('file', this.state.files[0]).then(res => console.log(res));
   }
 
   handleChange = event => {
     let data = event.target.value.replace(/\n|\r/g, "");
-    this.setState({ [event.target.id]: data});
+    this.setState({ [event.target.id]: data });
+  }
+
+  attachFile = file => {
+    this.setState({ files: file });
   }
 
   render() {
+    console.log(this.state.files) 
     return (
       <div className='add-species'>
         <h1>Add New Species</h1>
 
-        <div className='details-container'>
-          <h3>Specie Details</h3>
-          <div className='details-form'>
+        <div className='details-container' style={{ display: "flex" }}>
+          <div className='details-form' style={{ marginRight: "20px" }}>
+            <h3>Specie Details</h3>
             <InputField id="scientific_name" fieldName={'Scientific Name'} onChange={this.handleChange} autoFocus />
-            <InputField id="common_name" fieldName={'Common Name'} onChange={this.handleChange}/>
+            <InputField id="common_name" fieldName={'Common Name'} onChange={this.handleChange} />
             <MultiLineInput id="description" fieldName='Description' onChange={this.handleChange} />
           </div>
-        </div>  
+          <DropzoneArea
+            onChange={this.attachFile}
+            dropzoneText={'Drag and drop a csv file here or click to upload'}
+            acceptedFiles={['text/csv']}
+          />
+          {/* <FileUpload/> */}
+        </div>
         <div className='button-container' onClick={this.submitPost}>
           <AddButton className='addButton' buttonText='Save' />
         </div>

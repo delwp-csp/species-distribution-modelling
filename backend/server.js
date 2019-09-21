@@ -1,17 +1,26 @@
 const express = require("express");
 const bodyparser = require("body-parser");
 const fs = require("fs");
-// initializing application
+const multer = require("multer");
+const cors = require("cors");
 const app = express();
 
 // let specieCount = 1;
-let specieJsonPath = "./speciedata/species.json";
+let specieJsonPath = "./specie_data/species.json";
 
 app.use(bodyparser.json());
+app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+let storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "./specie_data/observation_data");
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  }
 });
+
+let upload = multer({ storage: storage }).single("file");
 
 writeSpecie = (path, jsonString) => {
   fs.writeFile(path, jsonString, err => {
@@ -41,11 +50,23 @@ app.post("/", (req, res) => {
 });
 
 app.get("/get_data", (req, res) => {
-  let data = fs.readFileSync(specieJsonPath,'utf-8');
+  let data = fs.readFileSync(specieJsonPath, "utf-8");
   data = data.replace(/\n|\r/g, "");
   data = JSON.parse(data);
   console.log("data being sent back", data);
   res.json(data);
+});
+
+app.post("/upload", (req, res) => {
+  console.log("file recieved:");
+  upload(req, res, err => {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      return res.status(500).json(err);
+    }
+    return res.status(200).send(req.file);
+  });
 });
 
 const port = 5000;
