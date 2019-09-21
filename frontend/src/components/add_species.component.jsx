@@ -17,22 +17,21 @@ class Add_Species extends Component {
       scientific_name:"",
       common_name:"",
       description:"",
-
     }
   }
 
   submitPost = () => {
     let { history } = this.props;
     history.push("/");
-    superagent('post', '/').send({ scientific_name: this.state.scientific_name, common_name: this.state.common_name, description:this.state.description }).then((data) => {
+    superagent('post', '/').send({scientific_name: this.state.scientific_name, common_name: this.state.common_name, description:this.state.description }).then((data) => {
       console.log("The server has recieved", data.body);
     })
   }
 
   handleChange = event => {
-    this.setState({ [event.target.id]: event.target.value });
+    let data = event.target.value.replace(/\n|\r/g, "");
+    this.setState({ [event.target.id]: data});
   }
-
 
   render() {
     return (
@@ -42,7 +41,7 @@ class Add_Species extends Component {
         <div className='details-container'>
           <h3>Specie Details</h3>
           <div className='details-form'>
-            <InputField id="scientific_name" fieldName={'Scientific Name'} onChange={this.handleChange} autoFocu  s />
+            <InputField id="scientific_name" fieldName={'Scientific Name'} onChange={this.handleChange} autoFocus />
             <InputField id="common_name" fieldName={'Common Name'} onChange={this.handleChange}/>
             <MultiLineInput id="description" fieldName='Description' onChange={this.handleChange} />
           </div>

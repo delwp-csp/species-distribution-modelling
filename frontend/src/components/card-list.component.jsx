@@ -1,15 +1,41 @@
 import React from 'react';
 import './card-list.styles.css';
 import { Card } from './card.component';
-import MediaCard from './mediacard.component';
+import superagent from 'superagent';
+import {withRouter} from 'react-router-dom';
 
-export const CardList = ({species, props}) => (
-  <div className='card-list'>
-    {console.log(species)}
-    {species.map(specie => (
-      <Card onClick = {()=> props.history.push(`/report/${specie.id}`)} key={specie.id} specie={specie} />
-      // <MediaCard key={specie.id} props ={specie} />
+class CardList extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      species: []
+    }
+  }
 
-    ))}
-  </div>
-);
+  componentDidMount(){
+    superagent('get','./get_data')
+      .then(data=>this.setState({species:data.body}))
+      .catch(err=> console.log(err));
+  }
+
+  render() {
+    let { history } = this.props;
+    let specieList = null;
+    if (this.state.species.length==0){
+      specieList = <h3>No specie has been added</h3>
+    }else{
+      specieList = this.state.species.map(specie => (
+        <Card onClick={() => history.push(`/report/${specie.id}`)} key={specie.scientific_name} specie={specie} />
+      ))
+    }
+
+    return (
+      <div className='card-list'>
+        {specieList}
+      </div>
+    )
+  }
+}
+
+export default withRouter(CardList);
+

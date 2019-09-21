@@ -10,7 +10,7 @@ export const Card = (props) => (
   <div className='card-container' onClick={props.onClick}>
     <img src={`https://robohash.org/${props.specie.id}?set=set2`} alt="" />
     <div className='card-info'>
-      <h2> {props.specie.name} </h2>
+      <h2> {props.specie.scientific_name} </h2>
       <p>{props.specie.description}</p>
     </div>
 
