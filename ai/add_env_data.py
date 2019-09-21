@@ -2,6 +2,7 @@ import sys
 import raster
 import vector
 import transform
+from pathlib import Path
 
 try:
 	import pandas as pd
@@ -11,18 +12,23 @@ except:
 	sys.exit(1)
 
 
-def add_raster_data(data, fname, column_name):
+def add_raster_data(data, fname):
+	column = Path(fname).stem
 	rp = raster.RasterProcessor(fname)
-	data[column_name] = data.apply(lambda row: rp.GetValueAt(row['vic_x'], row['vic_y']), axis=1)
+	bands_count = rp.data_source.RasterCount
+	for band_index in range(bands_count):
+		data['{}_{}'.format(column, band_index)] = data.apply(
+			lambda row: rp.GetValueAt(row['vic_x'], row['vic_y'], band_index), axis=1)
 	return data
 
 
 def add_columns(data):
-	for raster_file, column in [('../raw_dataset/sept2014JanMaxTemp/sept2014JanMaxTemp.ers', 'jan_max_temp'),
-	                            ('../raw_dataset/sept2014JanRainfall/sept2014JanRainfall.ers', 'jan_rainfall'),
-	                             ('../raw_dataset/sept2014JulMinTemp/sept2014JulMinTemp.ers', 'jul_min_temp'),
-	                              ('../raw_dataset/sept2014JulRainfall/sept2014JulRainfall.ers', 'jul_rainfall')]:
-		data = add_raster_data(data, raster_file, column)
+	for raster_file in ['../raw_dataset/sept2014JanMaxTemp/sept2014JanMaxTemp.ers',
+	                    '../raw_dataset/sept2014JanRainfall/sept2014JanRainfall.ers',
+	                    '../raw_dataset/sept2014JulMinTemp/sept2014JulMinTemp.ers',
+	                    '../raw_dataset/sept2014JulRainfall/sept2014JulRainfall.ers',
+	                    '../raw_dataset/SummerLandsat75_300_900m/SummerLandsat75_300_900m']:
+		data = add_raster_data(data, raster_file)
 
 	return data
 
