@@ -24,23 +24,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MultiLineInput({fieldName}) {
+export default function MultiLineInput({fieldName, ...props}) {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled',
-    currency: 'EUR',
-  });
+  
 
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
-  };
+  // const handleChange = name => event => {
+  //   setValues({ ...values, [name]: event.target.value });
+  // };
 
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <TextField
-        id="outlined-multiline-static"
         label={fieldName}
         multiline
         rows="4"
@@ -48,6 +42,7 @@ export default function MultiLineInput({fieldName}) {
         className={classes.textField}
         margin="normal"
         variant="outlined"
+        {...props}
       />
     </form>
   );

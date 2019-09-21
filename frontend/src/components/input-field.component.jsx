@@ -24,30 +24,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function InputField({fieldName}) {
+export default function InputField({fieldName, ...props}) {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    name: '',
-    age: '',
-    multiline: 'Controlled',
-    currency: 'EUR',
-  });
-
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
-  };
 
   return (
-    <form className={classes.container} noValidate autoComplete="off">
+    <div className={classes.container} noValidate autoComplete="off">
       <TextField
-        id="outlined-name"
         label={fieldName}
         className={classes.textField}
-        value={values.name}
-        onChange={handleChange('name')}
+        
         margin="normal"
         variant="outlined"
+        {...props}
       />
-    </form>
+    </div>
   );
 }
