@@ -30,13 +30,11 @@ class Add_Species extends Component {
   }
 
   handleChange = event => {
-    console.log(event.target.id, event.target.value);
     this.setState({ [event.target.id]: event.target.value });
   }
 
 
   render() {
-    console.log(this.state)
     return (
       <div className='add-species'>
         <h1>Add New Species</h1>
@@ -44,7 +42,7 @@ class Add_Species extends Component {
         <div className='details-container'>
           <h3>Specie Details</h3>
           <div className='details-form'>
-            <InputField id="scientific_name" fieldName={'Scientific Name'} onChange={this.handleChange}/>
+            <InputField id="scientific_name" fieldName={'Scientific Name'} onChange={this.handleChange} autoFocus />
             <InputField id="common_name" fieldName={'Common Name'} onChange={this.handleChange}/>
             <MultiLineInput id="description" fieldName='Description' onChange={this.handleChange} />
           </div>

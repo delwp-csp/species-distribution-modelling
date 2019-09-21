@@ -32,7 +32,6 @@ export default function InputField({fieldName, ...props}) {
       <TextField
         label={fieldName}
         className={classes.textField}
-        
         margin="normal"
         variant="outlined"
         {...props}
