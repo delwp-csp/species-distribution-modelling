@@ -15,7 +15,7 @@ def is_reliable(RELIABILITY, RATING_INT):
 
 # Latitude, Longit
 def main():
-	filename = sys.argv[1]
+	filename = '../dataset/Agile_Antechinus.csv'
 
 	new_file = filename[:-4] + '_filtered.csv'
 
@@ -48,14 +48,8 @@ def main():
 
 	with open(new_file, 'w') as result:
 		wtr = csv.writer(result)
-		wtr.writerows(rows)
-
-	# for r in rows:
-
-	with open(new_file, 'r') as original:
-		data = original.read()
-	with open(new_file, 'w') as modified:
-		modified.write('is_reliable,survey_date,latitude,longitude,lat_lng_accuracy,total_count,vic_x,vic_y\n' + data)
+		header = ['is_reliable', 'survey_date', 'latitude', 'longitude', 'lat_lng_accuracy', 'total_count', 'vic_x', 'vic_y', 'within_built_up_area', 'within_forest_u2', 'within_water_area', 'within_public_land_su3', 'jan_max_temp', 'jan_rainfaull', 'july_max_temp', 'july_rainfall']
+		wtr.writerows(header + rows)
 
 
 # f = pd.read_csv(filename)
