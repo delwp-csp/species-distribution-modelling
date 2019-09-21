@@ -5,19 +5,23 @@ except:
     print("Failed to load packages, make sure your conda environment is setup correctly")
     sys.exit(1)
 
+
 def is_reliable(row):
-    RELIABILITY = row['RELIABILITY']
-    RATING_INT = row['RATING_INT']
-    return not (RELIABILITY in ('', 'Unconfirmed') and RATING_INT in ('2', '4'))
+    return int(not(row['RELIABILITY'] in ('', 'Unconfirmed') and row['RATING_INT'] in ('2', '4')))
 
 def filter_columns(data):
+    COLUMNS_TO_KEEP = [
+        'is_reliable',
+        'latitude',
+        'longitude'
+    ]
     data['is_reliable'] = data.apply(is_reliable, axis=1)
     return data.rename(columns = {
         'LATITUDEDD_NUM': 'latitude',
         'LONGITUDEDD_NUM': 'longitude'
-    })
+    }).loc[:,COLUMNS_TO_KEEP]
 
-
+# sv record count, record type
 
 if __name__ == '__main__':
     data = pd.read_csv('../dataset/Agile_Antechinus.csv')
@@ -25,3 +29,4 @@ if __name__ == '__main__':
 
     ndata = filter_columns(data)
     print(ndata.columns)
+    print(ndata[:5])
