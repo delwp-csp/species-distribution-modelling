@@ -23,8 +23,14 @@ class RasterProcessor():
 	def GetValueAt(self, x, y, bandIndex=0):
 		px = int((x - self.geo_transform[0]) / self.geo_transform[1])
 		py = int((y - self.geo_transform[3]) / self.geo_transform[5])
-
-		return self.bands[bandIndex].ReadAsArray(px, py, 1, 1)[0][0]
+		try:
+			band = self.bands[bandIndex]
+		except:
+			print(bandIndex)
+			raise
+		array = band.ReadAsArray(px, py, 1, 1)
+		value = array[0][0]
+		return value
 
 
 if __name__ == "__main__":

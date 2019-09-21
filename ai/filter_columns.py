@@ -1,5 +1,4 @@
 import csv
-import sys
 import transform
 import vector
 import raster
@@ -14,9 +13,7 @@ def is_reliable(RELIABILITY, RATING_INT):
 
 
 # Latitude, Longit
-def main():
-	filename = '../dataset/Agile_Antechinus.csv'
-
+def main(filename):
 	new_file = filename[:-4] + '_filtered.csv'
 
 	rows = []
@@ -39,17 +36,28 @@ def main():
 		for i, v in enumerate(results):
 			rows[i].append(v)
 
-	for f in ['../raw_dataset/sept2014JanMaxTemp/sept2014JanMaxTemp.ers', '../raw_dataset/sept2014JanRainfall/sept2014JanRainfall.ers',
-	          '../raw_dataset/sept2014JulMinTemp/sept2014JulMinTemp.ers', '../raw_dataset/sept2014JulRainfall/sept2014JulRainfall.ers']:
+	for f in ['../raw_dataset/sept2014JanMaxTemp/sept2014JanMaxTemp.ers',
+	          '../raw_dataset/sept2014JanRainfall/sept2014JanRainfall.ers',
+	          '../raw_dataset/sept2014JulMinTemp/sept2014JulMinTemp.ers',
+	          '../raw_dataset/sept2014JulRainfall/sept2014JulRainfall.ers']:
 		print('rasterrr {}'.format(f))
 		rp = raster.RasterProcessor(f)
 		for i, v in enumerate(vic_coordinates):
 			rows[i].append(rp.GetValueAt(*v))
 
+	rp = raster.RasterProcessor('../raw_dataset/SummerLandsat75_300_900m/SummerLandsat75_300_900m')
+	print('summerLandsat')
+	for i, v in enumerate(vic_coordinates):
+		for bandIndex in range(8):
+			rows[i].append(rp.GetValueAt(v[0], v[1], bandIndex))
+
 	with open(new_file, 'w') as result:
 		wtr = csv.writer(result)
-		header = ['is_reliable', 'survey_date', 'latitude', 'longitude', 'lat_lng_accuracy', 'total_count', 'vic_x', 'vic_y', 'within_built_up_area', 'within_forest_u2', 'within_water_area', 'within_public_land_su3', 'jan_max_temp', 'jan_rainfaull', 'july_max_temp', 'july_rainfall']
-		wtr.writerows(header + rows)
+		header = ['is_reliable', 'survey_date', 'latitude', 'longitude', 'lat_lng_accuracy', 'total_count', 'vic_x',
+		          'vic_y', 'within_built_up_area', 'within_forest_u2', 'within_water_area', 'within_public_land_su3',
+		          'jan_rainfaull', 'jan_max_temp', 'july_rainfall', 'july_max_temp'] + ['LandSat_{}'.format(i+1) for i in range(8)]
+		wtr.writerow(header)
+		wtr.writerows(rows)
 
 
 # f = pd.read_csv(filename)
@@ -62,4 +70,14 @@ def main():
 
 
 if __name__ == '__main__':
-	main()
+	# Luke and Aichi gonna hate me so bad for doing this LOL
+	for f in [
+		'../dataset/Agile_Antechinus.csv',
+		'../dataset/Brown_Treecreeper.csv',
+		'../dataset/Common_Beard-heath.csv',
+		'../dataset/Small_Triggerplant.csv',
+		'../dataset/Southern_Brown_Tree_Frog.csv',
+		'../dataset/White-browed_Treecreeper.csv',
+	]:
+		print('processing {}'.format(f))
+		main(f)
