@@ -1,4 +1,5 @@
 from osgeo import ogr, osr, gdal
+import pandas as pd
 
 
 
@@ -32,3 +33,9 @@ def vicmap2latlong(coords):
     point = geo.GetPoint(0)
 
     return (point[0], point[1])
+
+
+def add_vic_coordinates(data):
+    # data = pandas dataframe object
+    data[['vic_x', 'vic_y']] = data.apply(lambda row: pd.Series(latlong2vicmap((row['latitude'], row['longitude']))), axis=1)
+    return data
