@@ -12,14 +12,13 @@ except:
 def balance(data):
 
     reliable = data.is_reliable
-    print("raw",Counter(reliable))
     data = data.loc[:,['latitude', 'longitude']]
 
     r_data, r_reliable = RandomOverSampler().fit_resample(data, reliable)
     s_data, s_reliable = SMOTE().fit_resample(data, reliable)
     a_data, a_reliable = ADASYN().fit_resample(data,reliable)
     return {
-        'random': [r_data, r_reliable],
-        'smote': [s_data, s_reliable],
-        'adasyn': [a_data, a_reliable]
+        'random': [pd.DataFrame(r_data, columns=data.columns), r_reliable],
+        'smote': [pd.DataFrame(s_data, columns=data.columns), s_reliable],
+        'adasyn': [pd.DataFrame(a_data, columns=data.columns), a_reliable]
     }
