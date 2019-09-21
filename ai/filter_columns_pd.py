@@ -1,13 +1,20 @@
 import sys
 try: 
     import pandas as pd
+    import numpy as np
 except:
     print("Failed to load packages, make sure your conda environment is setup correctly")
     sys.exit(1)
 
 
 def is_reliable(row):
-    return int(not(row['RELIABILITY'] in ('', 'Unconfirmed') and row['RATING_INT'] in ('2', '4')))
+    #print(row['RELIABILITY'])
+    #print(row['RATING_INT'])
+    #print(row)
+    isReliable = not(row['RELIABILITY'] in (np.nan, 'Unconfirmed') and row['RATING_INT'] in (2, 4))
+    #if not isReliable:
+    #    print("BINGO")
+    return int(isReliable)
 
 def filter_columns(data):
     COLUMNS_TO_KEEP = [
