@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "siteName": "Details entry 1",
+    "coSys": "xxxxxxxxxxxx",
+    "spatialAccuracy": "1"
+  },
+  {
+    "id": "2",
+    "siteName": "Details of entry 2",
+    "coSys": "xxxxxxxxxxxx",
+    "spatialAccuracy": "2"
+  },
+  {
+    "id": "3",
+    "siteName": "details of entry",
+    "coSys": "xxxxxxxxxxxx",
+    "spatialAccuracy": "3"
+  },
+  {
+    "id": "4",
+    "siteName": "Junction of Snobs Creek",
+    "coSys": "xxxxxxxxxxxx",
+    "spatialAccuracy": "120"
+  },
+  {
+    "id": "5",
+    "siteName": "Junction of Snobs Creek",
+    "coSys": "xxxxxxxxxxxx",
+    "spatialAccuracy": "120"
+  }
+]

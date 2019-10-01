@@ -63,3 +63,4 @@ typings/
 
 __pycache__
 .idea
+/backend/specie_data/

@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.3.2",
+    "@material-ui/icons": "^4.2.1",
+    "dropzone": "^5.5.1",
+    "material-ui": "^0.20.2",
+    "material-ui-dropzone": "^2.4.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.0"
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.0",
+    "superagent": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -13,6 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": "react-app"
   },

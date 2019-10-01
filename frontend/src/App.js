@@ -1,39 +1,32 @@
-import React from 'react';
+import React, { Component } from "react";
+import Home from "./components/home.component";
+import Add_Species from "./components/add_species.component";
+import Report from "./components/report.component";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-function Heading({ children, color }) {
-  return <h1 style={{ color }}>{children}</h1>
-}
+// https://www.styled-components.com/
 
-class TickTock extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { n: 0 }
-  }
-
-
-  render() {
-    return this.state.n
-  }
-
-  componentDidMount() {
-    this.i = setInterval(() => this.setState({ n: this.state.n + 1 }), 1000)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.i)
-  }
-}
-
-
+// function Heading({ children, color }) {
+//   return <h1 style={{ color }}>{children}</h1>
+// }
 
 function App() {
+
   return (
-    <div>
-      Test
-      <Heading color="green">Hello</Heading>
-      <p><TickTock /> seconds have passed since you loaded the page</p>
+    <div className="App">
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/add-species" component={Add_Species} />
+          <Route path = "/report/:specieId" component = {Report} />
+        </Switch>
+      </BrowserRouter>
+
+      {/* {page === 'home' && <Home metadata={metadata}/>}
+      {page === 'add-species' && <Add_Species metadata={metadata}/>}      
+      {page === 'report' && <Report metadata={metadata}/>} */}
     </div>
-  )
+  );
 }
 
 export default App;

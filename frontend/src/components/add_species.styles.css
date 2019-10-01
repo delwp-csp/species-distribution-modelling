@@ -1,0 +1,17 @@
+.details-container{
+  margin-top: 40px; 
+}
+
+.details-form{
+  padding:30px;
+  padding-bottom: 50px;
+  width:45%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.027), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+}
+
+.add-species .button-container{
+  position: absolute;
+  bottom:100px;
+  right:100px;
+}
