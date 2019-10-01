@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import sys
-from cmd_addenv import addenv
+from cmd_preprocess import preprocess
 
 def dummy(args):
 	print("501 Not Implemented")
@@ -21,9 +21,9 @@ def init_parser():
 	parser = argparse.ArgumentParser(description='Process arguments to model species data')
 
 	subparsers = parser.add_subparsers(metavar="cmd")
-	p_addenv = subparsers.add_parser('addenv', help='Adds the environmental data to a csv of observations')
-	setup_files(p_addenv, setup_modelfile=False)
-	p_addenv.set_defaults(func=addenv)
+	p_preprocess = subparsers.add_parser('preprocess', help='Adds the environmental data to a csv of observations')
+	setup_files(p_preprocess, setup_modelfile=False)
+	p_preprocess.set_defaults(func=preprocess)
 
 	p_balance = subparsers.add_parser('balance', help='Balances the data to have roughly the same number of reliable and un-reliable data points')
 	p_balance.add_argument('balancer_type', choices=['smote', 'adasyn', 'random'], metavar='balancer-type', help="""

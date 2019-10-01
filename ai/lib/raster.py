@@ -6,17 +6,17 @@ class RasterProcessor():
 	# fname must be a .ers file
 	def __init__(self, fname):
 		bn = basename(fname)
-		print("Opening {}...".format(fname))
+		#print("Opening {}...".format(fname))
 		self.data_source = gdal.Open(fname)
-		print("{} has {} band(s)".format(bn, self.data_source.RasterCount))
+		#print("{} has {} band(s)".format(bn, self.data_source.RasterCount))
 
 		self.bands = [self.data_source.GetRasterBand(band) for band in range(1, self.data_source.RasterCount + 1)]
 
 		if self.bands[0].GetMinimum() is None or self.bands[0].GetMaximum() is None:
-			print("Computing statistics for {}".format(bn))
+		#	print("Computing statistics for {}".format(bn))
 			self.bands[0].ComputeStatistics(0)
 
-		print("{} is {}x{}".format(bn, self.data_source.RasterXSize, self.data_source.RasterYSize))
+		#print("{} is {}x{}".format(bn, self.data_source.RasterXSize, self.data_source.RasterYSize))
 
 		self.geo_transform = self.data_source.GetGeoTransform()
 
