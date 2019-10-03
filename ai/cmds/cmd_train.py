@@ -1,11 +1,11 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn import svm
-from sklearn.metrics import accuracy_score
 from joblib import dump
 
 
-def test_train(args):
+
+def train(args):
 	if not args.outfile:
 		print("Warning: Training data without saving the model is useless...")
 
@@ -20,4 +20,4 @@ def test_train(args):
 	if args.modelfile:
 		dump(model, args.modelfile)
 
-	return model
+	return model, x_test, y_test
