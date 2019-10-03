@@ -1,11 +1,5 @@
-def addenv(args):
-    print("Adding env")
-    print(args)
-
-
-def balance(args):
-    print("balancing data")
-    print(args)
+from cmds.cmd_preprocess import preprocess
+from cmds.cmd_balance import balance
 
 
 def test_train(args):

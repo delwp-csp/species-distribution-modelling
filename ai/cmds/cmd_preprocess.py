@@ -17,5 +17,6 @@ def preprocess(args):
 
     data = add_columns(data)
 
-    data.to_csv(args.outfile)
+    if (args.outfile):
+        data.to_csv(args.outfile)
     return data

@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import sys
-from cmd_preprocess import preprocess
-from .cmds import *
-
-def dummy(args):
-	print("501 Not Implemented")
-	print(args)
-	sys.exit(1)
+from cmds import *
 
 
 def setup_files(subparser, setup_outfile = True, setup_modelfile = True):
@@ -21,13 +15,13 @@ def setup_files(subparser, setup_outfile = True, setup_modelfile = True):
 def init_parser():
 	parser = argparse.ArgumentParser(description='Process arguments to model species data')
 
-	subparsers = parser.add_subparsers(metavar="cmd")
+	subparsers = parser.add_subparsers(metavar="cmd", required=True)
 	p_preprocess = subparsers.add_parser('preprocess', help='Adds the environmental data to a csv of observations')
 	setup_files(p_preprocess, setup_modelfile=False)
 	p_preprocess.set_defaults(func=preprocess)
 
 	p_balance = subparsers.add_parser('balance', help='Balances the data to have roughly the same number of reliable and un-reliable data points')
-	p_balance.add_argument('balancer_type', choices=['smote', 'adasyn', 'random'], metavar='balancer-type', help="""
+	p_balance.add_argument('balancer_type', choices=['smote', 'adasyn', 'random', 'lof', 'isolation_forest'], metavar='balancer-type', help="""
 	The balancer to use to balance the data set.
 	Valid options are: smote, adasyn, random
 	""")
