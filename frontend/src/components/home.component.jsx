@@ -3,22 +3,39 @@ import CardList from './card-list.component';
 import AddButton from './button.component';
 import './home.styles.css';
 import superagent from 'superagent';
-import { Card } from '@material-ui/core';
 
 
 class Home extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      serverRunning:true
+    }
+  }
+
+  componentDidMount() {
+    superagent('get', './get_data')
+      .catch(err => this.setState({serverRunning:false}));
+  }
+
   render() {
-    
-    return (
-      <div className='home'>
-        <h1 className='page-title'>DWELP Species Modelling</h1>
-        <div className='button-container' onClick={() => this.props.history.push('/add-species')}>
-          <AddButton className='addButton' buttonText='Add new species →' />
+    if (this.state.serverRunning){
+      return (
+        <div className='home'>
+          <h1 className='page-title'>DWELP Species Modelling</h1>
+          <div className='button-container' onClick={() => this.props.history.push('/add-species')}>
+            <AddButton className='addButton' buttonText='Add new species →' />
+          </div>
+          <CardList />
         </div>
-        <CardList/>
-      </div>
-    )
+      )
+    }else{
+      return(
+        <h1>The server is not responding</h1>
+      )
+    }
+    
   }
 
 

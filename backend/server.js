@@ -4,19 +4,46 @@ const fs = require("fs");
 const multer = require("multer");
 const cors = require("cors");
 const app = express();
+const flash = require('connect-flash');
+const session = require('express-session');
 
-// let specieCount = 1;
-let specieJsonPath = "./specie_data/species.json";
+const DATA_DIR = "../dataset"
+
+//Express session middleware
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
 
 app.use(bodyparser.json());
 app.use(cors());
 
+app.use(flash());
+
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
+
+// let specieCount = 1;
+let specieJsonPath = `${DATA_DIR}/species.json`;
+
+fs.writeFileSync(specieJsonPath, "", { flag: 'a+' });
+
 let storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "./specie_data/observation_data");
+    let dirName = `${DATA_DIR}/${req.header('dirName')}`
+    dirName = dirName.replace(" ","_").toLowerCase();
+    if (!fs.existsSync(dirName)) {
+      fs.mkdirSync(dirName)
+    }
+    cb(null, dirName);
   },
   filename: function(req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, 'observations.csv');
   }
 });
 
@@ -32,12 +59,12 @@ writeSpecie = (path, jsonString) => {
   });
 };
 
+
 app.post("/", (req, res) => {
-  // console.log("The request body", req.body);
 
   let jsonString = JSON.stringify(req.body, null, 2);
   let data = fs.readFileSync(specieJsonPath, "utf-8");
-
+  fs.writeFileSync(specieJsonPath, "", { flag: 'a+' });
   if (data.length == 0) {
     writeSpecie(specieJsonPath, "[" + jsonString + "]");
   } else {
@@ -46,19 +73,26 @@ app.post("/", (req, res) => {
 
     writeSpecie(specieJsonPath, data);
   }
+  req.flash('success_msg', 'Video idea added');
   res.json(req.body);
 });
 
+
 app.get("/get_data", (req, res) => {
   let data = fs.readFileSync(specieJsonPath, "utf-8");
-  data = data.replace(/\n|\r/g, "");
-  data = JSON.parse(data);
-  console.log("data being sent back", data);
-  res.json(data);
+
+  if (data.length != 0){
+    data = data.replace(/\n|\r/g, "");
+    data = JSON.parse(data);
+    res.json(data);
+  }else{
+    res.json("")
+  }
+  
 });
 
 app.post("/upload", (req, res) => {
-  console.log("file recieved:");
+
   upload(req, res, err => {
     if (err instanceof multer.MulterError) {
       return res.status(500).json(err);

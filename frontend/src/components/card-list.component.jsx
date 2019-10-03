@@ -1,7 +1,7 @@
 import React from 'react';
 import './card-list.styles.css';
 import { Card } from './card.component';
-import superagent from 'superagent';
+import superagent from 'superagent';x 
 import {withRouter} from 'react-router-dom';
 
 class CardList extends React.Component {
@@ -21,12 +21,12 @@ class CardList extends React.Component {
   render() {
     let { history } = this.props;
     let specieList = null;
-    if (this.state.species.length==0){
+    if (this.state.species.length === 0){
       specieList = <h3>No specie has been added</h3>
     }else{
       specieList = this.state.species.map(specie => (
-        <Card onClick={() => history.push(`/report/${specie.id}`)} key={specie.scientific_name} specie={specie} />
-      ))
+        <Card onClick={() => history.push(`/report/${specie.scientific_name}`)} key={specie.scientific_name} specie={specie} />
+      ));
     }
 
     return (

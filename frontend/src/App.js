@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Home from "./components/home.component";
 import Add_Species from "./components/add_species.component";
 import Report from "./components/report.component";
@@ -18,7 +18,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/add-species" component={Add_Species} />
-          <Route path = "/report/:specieId" component = {Report} />
+          <Route path = "/report/:scientific_name" component = {Report} />
         </Switch>
       </BrowserRouter>
 
