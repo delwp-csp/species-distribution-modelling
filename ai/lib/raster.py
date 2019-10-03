@@ -28,8 +28,14 @@ class RasterProcessor():
 		except:
 			print(bandIndex)
 			raise
-		array = band.ReadAsArray(px, py, 1, 1)
-		value = array[0][0]
+		try:
+			array = band.ReadAsArray(px, py, 1, 1)
+			value = array[0][0]
+		except:
+			print(x,y)
+			print(self.geo_transform)
+			raise
+			
 		return value
 
 
