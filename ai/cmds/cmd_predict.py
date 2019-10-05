@@ -4,7 +4,8 @@ from joblib import load
 
 def predict(args):
 	dataset = pd.read_csv(args.infile)
-	x, y = dataset[args.training_type]
+
+	x, y = dataset[args.training_type] # todo: fix this
 
 	model = load(args.modelfile)
 	predictions = model.predict(x)

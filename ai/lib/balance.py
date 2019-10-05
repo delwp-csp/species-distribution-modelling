@@ -68,4 +68,4 @@ def novelty_balance(dataset, method):
         fraction = num_to_generate / len(ut) 
         unreliable_data = unreliable_data.append(ut.sample(min(len(ut), len(reliable_data) - len(unreliable_data))), ignore_index=True)
 
-    return reliable_data.append(unreliable_data, ignore_index=True)
+    return reliable_data.append(unreliable_data, ignore_index=True).drop(columns=['vic_x', 'vic_y'])
