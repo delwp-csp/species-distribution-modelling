@@ -7,6 +7,7 @@ const ai = require("./ai");
 const utils = require("./utils")
 const app = express();
 
+app.use(express.static('frontend'))
 app.use(bodyparser.json());
 app.use(cors());
 

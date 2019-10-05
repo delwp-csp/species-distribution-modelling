@@ -2,7 +2,7 @@ import React from "react";
 import Home from "./components/home.component";
 import Add_Species from "./components/add_species.component";
 import Report from "./components/report.component";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route } from "react-router-dom";
 
 // https://www.styled-components.com/
 
@@ -14,13 +14,13 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/add-species" component={Add_Species} />
           <Route path = "/report/:specie_name" component={Report} />
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
 
       {/* {page === 'home' && <Home metadata={metadata}/>}
       {page === 'add-species' && <Add_Species metadata={metadata}/>}      
