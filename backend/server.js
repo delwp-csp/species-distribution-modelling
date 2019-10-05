@@ -36,18 +36,12 @@ app.post("/", (req, res) => {
   res.json(req.body);
 });
 
+app.get("/progress/:specieName", (req, res) => {
+  res.json(ai.get_progress(req.params.specieName)).end()
+})
 
 app.get("/get_data", (req, res) => {
-  let data = fs.readFileSync(specieJsonPath, "utf-8");
-
-  if (data.length != 0){
-    data = data.replace(/\n|\r/g, "");
-    data = JSON.parse(data);
-    res.json(data);
-  }else{
-    res.json("")
-  }
-  
+  res.json(utils.readJSONFile(specieJsonPath, []))
 });
 
 app.post("/upload", (req, res) => {

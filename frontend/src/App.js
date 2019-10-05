@@ -18,7 +18,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/add-species" component={Add_Species} />
-          <Route path = "/report/:scientific_name" component = {Report} />
+          <Route path = "/report/:specie_name" component={Report} />
         </Switch>
       </BrowserRouter>
 

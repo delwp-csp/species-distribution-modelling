@@ -31,7 +31,7 @@ class Add_Species extends Component {
     superagent('post', '/').send({ scientific_name: specieName, common_name: this.state.common_name, description: this.state.description }).then((data) => {
       console.log("The server has recieved", data.body);
     });
-    superagent('post','/upload').attach('file', this.state.files[0]).set('dirName',`${this.state.scientific_name}`).then(res => console.log(res));
+    superagent('post','/upload').attach('file', this.state.files[0]).set('specieName',`${this.state.scientific_name}`).then(res => console.log(res));
   }
 
   handleChange = event => {
