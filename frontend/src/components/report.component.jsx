@@ -12,16 +12,28 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Collapse from '@material-ui/core/Collapse';
 
 const STATUS_COLORS = { DONE: 'green', FAILED: 'red', RUNNING: 'black'}
 function StepProgress({ step, now, children }) {
   const time = step.status === 'RUNNING' ? now - step.start : step.end - step.start
-  return <TableRow>
+  const [showDetails, setShowDetails] = React.useState(false)
+  return <>
+  <TableRow onClick={() => setShowDetails(!showDetails)}>
     <TableCell>{children}</TableCell>
     <TableCell>{Math.round(time / 100) / 10}s</TableCell>
     <TableCell><span style={{color: STATUS_COLORS[step.status] }}>{step.status}</span></TableCell>
     <TableCell>{step.accuracy && Math.round(step.accuracy*10000)/100+'%'}</TableCell>
   </TableRow>
+  <TableRow onClick={() => setShowDetails(!showDetails)} style={{ display: showDetails ? "table-row" : "none" }}>
+    <TableCell colSpan={4}>
+        <div>
+          <h2>Console Output</h2>
+          {step.output && step.output.map(line => <pre style={{color: line[0] === 'stderr' ? 'red': 'black'}}>{line[1]}</pre>)}
+        </div>
+    </TableCell>
+  </TableRow>
+  </>
 }
 
 class Report extends React.Component {

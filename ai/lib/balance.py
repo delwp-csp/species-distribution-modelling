@@ -45,7 +45,7 @@ def novelty_balance(dataset, method):
 
     bal.fit(reliable_data.drop(columns=["is_reliable", "vic_x", "vic_y"]))
 
-    # print("Novlty Balancer - {}".format(method))
+    print("Novelty Balancer - {}".format(method))
     
     fraction = 1
     while len(unreliable_data) < len(reliable_data) * 0.99: # Be lenient if we miss out on one or two entries
@@ -53,8 +53,8 @@ def novelty_balance(dataset, method):
             (len(reliable_data) - len(unreliable_data)) * (fraction + 0.1),
             100 # Always generate at least 100 points
         ))
-        # print("Generating {} random points".format(num_to_generate))
-        # print("Currently have {} reliable and {} unreliable".format(len(reliable_data), len(unreliable_data)))
+        print("Generating {} random points".format(num_to_generate))
+        print("Currently have {} reliable and {} unreliable".format(len(reliable_data), len(unreliable_data)))
 
         x_coords = randint(2128000, 2960000, num_to_generate)
         y_coords = randint(2258000, 2824000, num_to_generate)

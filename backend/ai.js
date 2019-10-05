@@ -27,7 +27,8 @@ function set_progress(key, value) {
     utils.writeJSONFile(progressFname, progress)
 }
 
-function get_progress(specieName) {
+function get_progress(_specieName) {
+    const specieName = _specieName.replace(' ', '_').toLowerCase()
     const retval = progress[specieName] || {}
     return {
         ...retval,
@@ -78,12 +79,12 @@ function process_step(tag, args, infile, outfile) {
         set_progress(`${tag}.end`, Date.now())
         set_progress(`${tag}.status`, data.exitCode ? 'FAILED' : 'DONE')
         set_progress(`${tag}.output`, data.output)
-        if (data.exitCode) throw new Error('Python failed')
         return data
     })
 }
 
-function process(specieName) {
+function process(_specieName) {
+    const specieName = _specieName.replace(' ', '_').toLowerCase()
     console.log(`Processing ${specieName}`)
 
     set_progress(`${specieName}.status`, 'RUNNING')
@@ -93,8 +94,8 @@ function process(specieName) {
     process_step(`${specieName}.preprocess`, ['preprocess'], file('observations'), file('preprocess')).then(() => {
         return Promise.all(balancers.map(balancer => {
             return process_step(`${specieName}.bal.${balancer}.balance`, ['balance', balancer], file('preprocess'), file(`balance-${balancer}`)).then(({exitCode}) => {
-                if (exitCode) return
-                return Promise.all(models.map(model => {
+                if (exitCode) return 
+                return Promise.all(models.map(model => 
                     process_step(`${specieName}.bal.${balancer}.model.${model}`, ['test_train', model, '-m', file(`${model}.model`)], file(`balance-${balancer}`)).then(data => {
                         const matches = data.outputString.match(/accuracy is ([0-9.]*)/)
                         if (matches) {
@@ -103,11 +104,10 @@ function process(specieName) {
                             set_progress(`${specieName}.accuracies.${balancer}_${model}`, accuracy)
                         }
                     })
-                }))
+                ))
             })
         }))
     }).then(() => {
-
         console.log('Finished processing ' + specieName)
         set_progress(`${specieName}.status`, 'DONE')
     })
