@@ -59,8 +59,8 @@ app.post("/upload", (req, res) => {
   });
 });
 
-const port = 5000;
+const port = 80;
 
 app.listen(port, () => {
-  console.log("server running");
+  console.log(`server running on port ${port}`);
 });

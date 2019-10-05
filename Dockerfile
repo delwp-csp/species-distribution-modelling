@@ -1,6 +1,6 @@
 # init
 FROM node:10
-MAINTAINER Harsil Patel <harsilspatel@gmail.com>
+LABEL maintainer="harsil.s.patel@gmail.com>"
 
 # copy the ai scripts
 RUN mkdir delwp
@@ -20,5 +20,10 @@ COPY frontend delwp/frontend
 
 RUN cd delwp/backend && yarn
 RUN cd delwp/frontend && yarn && yarn build
+RUN cp -r /delwp/frontend/build /delwp/backend/frontend
+RUN rm -r /delwp/frontend
 
 RUN mkdir delwp/dataset
+RUN conda init bash
+
+CMD bash -c "source ~/.bashrc && conda activate gdal && cd delwp/backend && node server.js"
