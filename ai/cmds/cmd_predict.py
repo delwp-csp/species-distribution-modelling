@@ -14,7 +14,7 @@ def predict(args):
     data = add_columns(data)
 
     model = load(args.modelfile)
-    predictions = model.predict(x.drop(columns=['is_reliable', 'vic_x', 'vic_y', 'latitude', 'longitude']))
+    predictions = model.predict(data.drop(columns=['is_reliable', 'vic_x', 'vic_y', 'latitude', 'longitude']))
 
     if args.outfile:
         pd.DataFrame(predictions, columns=['predictions']).to_csv(args.outfile)
