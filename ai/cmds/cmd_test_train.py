@@ -9,7 +9,7 @@ from lib.train import train_model, predict_model
 def test_train(args):
 	# todo: integrate predict command and drop commands
 
-	dataset = pd.read_csv(args.infile)
+	dataset = pd.read_csv(args.infile, index_col=0)
 	y = dataset.is_reliable
 	dataset = dataset.drop(columns=['is_reliable'])
 	x = dataset

@@ -30,6 +30,8 @@ function StepProgress({ step, now, children }) {
         <div>
           <h2>Console Output</h2>
           {step.output && step.output.map(line => <pre style={{color: line[0] === 'stderr' ? 'red': 'black'}}>{line[1]}</pre>)}
+          <h2>Distribution Plot</h2>
+          {step.distribution_plot && <img src={step.distribution_plot}/>}
         </div>
     </TableCell>
   </TableRow>

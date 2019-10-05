@@ -41,6 +41,16 @@ app.get("/progress/:specieName", (req, res) => {
   res.json(ai.get_progress(req.params.specieName)).end()
 })
 
+app.get("/distribution/:specieName/:balancer/:model", (req, res) => {
+  const {specieName, balancer, model} = req.params
+  const fname = `${utils.DATA_DIR}/${specieName.replace(/[^a-zA-Z]/g,'_')}/${balancer}-${model}.png`
+  if (fs.existsSync(fname)) {
+    res.sendFile(fname)
+  } else {
+    res.status(404);
+  }
+})
+
 app.get("/get_data", (req, res) => {
   res.json(utils.readJSONFile(specieJsonPath, []))
 });

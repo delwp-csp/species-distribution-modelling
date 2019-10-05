@@ -96,14 +96,16 @@ function process(_specieName) {
             return process_step(`${specieName}.bal.${balancer}.balance`, ['balance', balancer], file('preprocess'), file(`balance-${balancer}`)).then(({exitCode}) => {
                 if (exitCode) return 
                 return Promise.all(models.map(model => 
-                    process_step(`${specieName}.bal.${balancer}.model.${model}`, ['test_train', model, '-m', file(`${model}.model`)], file(`balance-${balancer}`)).then(data => {
+                    process_step(`${specieName}.bal.${balancer}.model.${model}`, ['test_train', model, '-m', file(`${balancer}-${model}.model`)], file(`balance-${balancer}`)).then(data => {
                         const matches = data.outputString.match(/accuracy is ([0-9.]*)/)
                         if (matches) {
                             const accuracy = parseFloat(matches[1])
                             set_progress(`${specieName}.bal.${balancer}.model.${model}.accuracy`, accuracy)
                             set_progress(`${specieName}.accuracies.${balancer}_${model}`, accuracy)
                         }
-                    })
+                    }).then(() => 
+                        run_python(`${specieName}.bal.${balancer}.model_plot.${model}`, ['plot', '-m', file(`${balancer}-${model}.model`)], file('preprocess'), file(`${balancer}-${model}.png`))
+                    ).then(() => set_progress(`${specieName}.bal.${balancer}.model.${model}.distribution_plot`, `/distribution/${specieName}/${balancer}/${model}`))
                 ))
             })
         }))

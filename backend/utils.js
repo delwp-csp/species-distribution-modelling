@@ -1,5 +1,6 @@
 const fs = require("fs")
-const DATA_DIR = "../dataset"
+const path = require('path')
+const DATA_DIR = path.resolve("../dataset")
 
 const getDirName = (specieName) => `${DATA_DIR}/${specieName.replace(/[^a-zA-Z]/g,"_").toLowerCase()}`
 
