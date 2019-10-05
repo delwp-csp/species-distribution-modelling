@@ -42,6 +42,10 @@ def init_parser():
 	setup_files(p_predict)
 	p_predict.set_defaults(func=predict)
 
+	p_plot = subparsers.add_parser('plot', help='Plot the model on a graph')
+	setup_files(p_plot)
+	p_plot.set_defaults(func=plot)
+
 	return parser
 
 
