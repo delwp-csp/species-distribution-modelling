@@ -3,40 +3,19 @@ const bodyparser = require("body-parser");
 const fs = require("fs");
 const multer = require("multer");
 const cors = require("cors");
+const ai = require("./ai");
+const utils = require("./utils")
 const app = express();
-const flash = require('connect-flash');
-const session = require('express-session');
-
-const DATA_DIR = "../dataset"
-
-//Express session middleware
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true
-}));
 
 app.use(bodyparser.json());
 app.use(cors());
 
-app.use(flash());
-
-app.use(function (req, res, next) {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
-});
-
 // let specieCount = 1;
-let specieJsonPath = `${DATA_DIR}/species.json`;
+const specieJsonPath = `${utils.DATA_DIR}/species.json`;
 
-fs.writeFileSync(specieJsonPath, "", { flag: 'a+' });
-
-let storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    let dirName = `${DATA_DIR}/${req.header('dirName')}`
-    dirName = dirName.replace(" ","_").toLowerCase();
+    const dirName = utils.getDirName(req.header('specieName'))
     if (!fs.existsSync(dirName)) {
       fs.mkdirSync(dirName)
     }
@@ -47,33 +26,13 @@ let storage = multer.diskStorage({
   }
 });
 
-let upload = multer({ storage: storage }).single("file");
-
-writeSpecie = (path, jsonString) => {
-  fs.writeFile(path, jsonString, err => {
-    if (err) {
-      console.log("Error writing file", err);
-    } else {
-      console.log("Successfully wrote file");
-    }
-  });
-};
-
+const upload = multer({ storage: storage }).single("file");
 
 app.post("/", (req, res) => {
+  const data = utils.readJSONFile(specieJsonPath, [])
+  data.push(req.body);
+  utils.writeJSONFile(specieJsonPath, data)
 
-  let jsonString = JSON.stringify(req.body, null, 2);
-  let data = fs.readFileSync(specieJsonPath, "utf-8");
-  fs.writeFileSync(specieJsonPath, "", { flag: 'a+' });
-  if (data.length == 0) {
-    writeSpecie(specieJsonPath, "[" + jsonString + "]");
-  } else {
-    data = data.substring(0, data.length - 1);
-    data = data + ",\n" + jsonString + "]";
-
-    writeSpecie(specieJsonPath, data);
-  }
-  req.flash('success_msg', 'Video idea added');
   res.json(req.body);
 });
 
@@ -99,7 +58,9 @@ app.post("/upload", (req, res) => {
     } else if (err) {
       return res.status(500).json(err);
     }
-    return res.status(200).send(req.file);
+    ai.process(req.header("specieName"))
+
+    return res.status(200).end();
   });
 });
 
