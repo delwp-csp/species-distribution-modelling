@@ -31,12 +31,18 @@ def plot(args):
 
     model = load(args.modelfile)
     d = pd.read_csv(args.infile, index_col=0)
-    dt = pd.read_csv(grid_filename, index_col=0)
-    pred = model.predict(dt.drop(columns=["vic_x", "vic_y"]))
+    grid_df = pd.read_csv(grid_filename, index_col=0)
+    pred = model.predict(grid_df.drop(columns=["vic_x", "vic_y"]))
+    fig, axs = plt.subplots(1, 2, figsize=(16, 6))
 
-    rt = dt[pred == 1]
-    ut = dt[pred != 1]
-    plt.scatter(x = rt.vic_x, y=rt.vic_y, c = '#009900', s=2)
-    plt.scatter(x = ut.vic_x, y=ut.vic_y, c = '#ff0000', s=2)
-    plt.scatter(x = d.vic_x, y=d.vic_y, c = '#000099', s=2)
+    
+    dist_r = grid_df[pred == 1]
+    dist_u = grid_df[pred != 1]
+    axs[0].set_title('Distribution with user data')
+    axs[0].scatter(x = dist_r.vic_x, y=dist_r.vic_y, c = '#009900', s=2)
+    axs[0].scatter(x = dist_u.vic_x, y=dist_u.vic_y, c = '#ff0000', s=2)
+    axs[0].scatter(x = d.vic_x, y=d.vic_y, c = '#000099', s=2)
+    axs[1].set_title('Distribution')
+    axs[1].scatter(x = dist_r.vic_x, y=dist_r.vic_y, c = '#009900', s=2)
+    axs[1].scatter(x = dist_u.vic_x, y=dist_u.vic_y, c = '#ff0000', s=2)
     plt.savefig(args.outfile)
