@@ -64,3 +64,4 @@ typings/
 __pycache__
 .idea
 /backend/specie_data/
+/ai/cmds/grid.csv

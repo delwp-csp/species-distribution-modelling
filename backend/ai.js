@@ -36,7 +36,7 @@ function get_progress(_specieName) {
     }
 }
 
-function run_python(tag, args, infile, outfile) {
+function run_python(tag, args, infile, outfile, onOutput) {
     return new Promise((resolve, reject) => {
         const proc = child_process.spawn(
             "python3",
@@ -53,11 +53,13 @@ function run_python(tag, args, infile, outfile) {
         proc.stdout.on('data', data => {
             console.log(data.toString().split('\n').map(s => `${tag} stdout: ${s}`).join('\n'))
             output.push(['stdout', data.toString()])
+            onOutput && onOutput(output)
         })
 
         proc.stderr.on('data', data => {
             console.log(data.toString().split('\n').map(s => `${tag} stderr: ${s}`).join('\n'))
             output.push(['stderr', data.toString()])
+            onOutput && onOutput(output)
         })
 
         proc.on('close', exitCode => {
@@ -75,7 +77,13 @@ function run_python(tag, args, infile, outfile) {
 function process_step(tag, args, infile, outfile) {
     set_progress(`${tag}.start`, Date.now())
     set_progress(`${tag}.status`, 'RUNNING')
-    return run_python(tag, args, infile, outfile).then(data => {
+    return run_python(
+        tag, 
+        args, 
+        infile, 
+        outfile, 
+        output => set_progress(`${tag}.output`, output)
+    ).then(data => {
         set_progress(`${tag}.end`, Date.now())
         set_progress(`${tag}.status`, data.exitCode ? 'FAILED' : 'DONE')
         set_progress(`${tag}.output`, data.output)
@@ -93,9 +101,9 @@ function process(_specieName) {
 
     process_step(`${specieName}.preprocess`, ['preprocess'], file('observations'), file('preprocess')).then(() => {
         return Promise.all(balancers.map(balancer => {
-            return process_step(`${specieName}.bal.${balancer}.balance`, ['balance', balancer], file('preprocess'), file(`balance-${balancer}`)).then(({exitCode}) => {
-                if (exitCode) return 
-                return Promise.all(models.map(model => 
+            return process_step(`${specieName}.bal.${balancer}.balance`, ['balance', balancer], file('preprocess'), file(`balance-${balancer}`)).then(({ exitCode }) => {
+                if (exitCode) return
+                return Promise.all(models.map(model =>
                     process_step(`${specieName}.bal.${balancer}.model.${model}`, ['test_train', model, '-m', file(`${balancer}-${model}.model`)], file(`balance-${balancer}`)).then(data => {
                         const matches = data.outputString.match(/accuracy is ([0-9.]*)/)
                         if (matches) {
@@ -103,7 +111,7 @@ function process(_specieName) {
                             set_progress(`${specieName}.bal.${balancer}.model.${model}.accuracy`, accuracy)
                             set_progress(`${specieName}.accuracies.${balancer}_${model}`, accuracy)
                         }
-                    }).then(() => 
+                    }).then(() =>
                         run_python(`${specieName}.bal.${balancer}.model_plot.${model}`, ['plot', '-m', file(`${balancer}-${model}.model`)], file('preprocess'), file(`${balancer}-${model}.png`))
                     ).then(() => set_progress(`${specieName}.bal.${balancer}.model.${model}.distribution_plot`, `/distribution/${specieName}/${balancer}/${model}`))
                 ))
