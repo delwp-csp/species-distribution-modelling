@@ -25,9 +25,10 @@ def ProcessPoints(dataframe, fname):
 
 
     series = pd.Series(map(lambda x: x.InShape, points), index=points_series.index)
-    dataframe[column] = series
+    retdf = pd.DataFrame()
+    retdf[column] = series
 
-    return dataframe
+    return retdf
 
 
 if __name__ == "__main__":
