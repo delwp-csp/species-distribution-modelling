@@ -9,7 +9,8 @@ from joblib import load
 
 grid_filename = os.path.dirname(os.path.realpath(__file__)) + '/grid.csv'
 
-def generate_grid():
+def generate_grid(args):
+    # Take args so that it doesn't crash
     if os.path.exists(grid_filename):
         print("Grid already exists, returning")
         return
@@ -26,7 +27,7 @@ def generate_grid():
 def plot(args):
 
     if not os.path.exists(grid_filename):
-        generate_grid()
+        generate_grid(args)
 
     model = load(args.modelfile)
     d = pd.read_csv(args.infile, index_col=0)
