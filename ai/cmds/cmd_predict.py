@@ -17,6 +17,10 @@ def predict(args):
     predictions = model.predict(data.drop(columns=['is_reliable', 'vic_x', 'vic_y', 'latitude', 'longitude']))
 
     if args.outfile:
-        pd.DataFrame(predictions, columns=['predictions']).to_csv(args.outfile)
+        pd.concat([
+            dataset,
+            data.drop(columns=['is_reliable','vic_x', 'vic_y','latitude', 'longitude']),
+            pd.DataFrame(predictions, columns=['predictions'])
+        ],axis=1).to_csv(args.outfile)
 
     return predictions

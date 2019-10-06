@@ -20,12 +20,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AddButton({buttonText}) {
+export default function AddButton({buttonText, onClick}) {
   const classes = useStyles();
 
   return (
     <div>
-      <Button variant="contained" color="primary" className={classes.button} >
+      <Button variant="contained" color="primary" className={classes.button} onClick={onClick} >
         {buttonText}
       </Button>
     </div>

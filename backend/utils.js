@@ -1,7 +1,9 @@
 const fs = require("fs")
 const path = require('path')
 const DATA_DIR = path.resolve("../dataset")
+const crypto = require("crypto");
 
+const id = () => crypto.randomBytes(8).toString("hex");
 const getDirName = (specieName) => `${DATA_DIR}/${specieName.replace(/[^a-zA-Z]/g,"_").toLowerCase()}`
 
 function readJSONFile(fname, defaultObject) {
@@ -18,5 +20,5 @@ function writeJSONFile(fname, object) {
 }
 
 module.exports = {
-    DATA_DIR, getDirName, readJSONFile, writeJSONFile
+    DATA_DIR, getDirName, readJSONFile, writeJSONFile, id
 }

@@ -4,7 +4,7 @@ import EntryDetail from './entry-detail.component'
 import SimpleTable from './table.component';
 import PaperSheet from './paper-sheet.component'
 import './report.styles.css'
-import AddButton from './button.component'
+import Button from './button.component'
 import superagent from 'superagent';
 
 import Table from '@material-ui/core/Table';
@@ -12,17 +12,25 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Collapse from '@material-ui/core/Collapse';
+
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const STATUS_COLORS = { DONE: 'green', FAILED: 'red', RUNNING: 'black'}
-function StepProgress({ step, now, children }) {
+
+function StatusDisplay({status}) {
+  return <span style={{color: STATUS_COLORS[status] }}>{status}</span>
+}
+
+function StepProgress({ step, now, children, runPredict }) {
   const time = step.status === 'RUNNING' ? now - step.start : step.end - step.start
   const [showDetails, setShowDetails] = React.useState(false)
   return <>
   <TableRow onClick={() => setShowDetails(!showDetails)}>
     <TableCell>{children}</TableCell>
     <TableCell>{Math.round(time / 100) / 10}s</TableCell>
-    <TableCell><span style={{color: STATUS_COLORS[step.status] }}>{step.status}</span></TableCell>
+    <TableCell><StatusDisplay status={step.status}/></TableCell>
     <TableCell>{step.accuracy && Math.round(step.accuracy*10000)/100+'%'}</TableCell>
   </TableRow>
   <TableRow onClick={() => setShowDetails(!showDetails)} style={{ display: showDetails ? "table-row" : "none" }}>
@@ -32,6 +40,7 @@ function StepProgress({ step, now, children }) {
           {step.output && step.output.map(line => <pre style={{color: line[0] === 'stderr' ? 'red': 'black'}}>{line[1]}</pre>)}
           <h2>Distribution Plot</h2>
           {step.distribution_plot && <img src={step.distribution_plot}/>}
+          {runPredict && <Button onClick={runPredict} buttonText="Run predictions"/>}
         </div>
     </TableCell>
   </TableRow>
@@ -44,7 +53,8 @@ class Report extends React.Component {
 
     this.state = {
       entries: [],
-      selectedRow: 'none'
+      selectedRow: 'none',
+      tab: 0
     }
     this.processProgress = this.processProgress.bind(this)
   }
@@ -70,32 +80,60 @@ class Report extends React.Component {
     this.setState({ progress })
   }
 
-  handleChange() {
-    console.log('clicked');
-  }
-
-
-
   render() {
-    const { progress } = this.state
+    const { progress, tab } = this.state
     let entryDetail;
+    const specieName = this.props.match.params.specie_name
 
+    const showComputations = tab === 2
     if (this.state.selectedRow != 'none') {
       entryDetail = <PaperSheet specieId={this.state.selectedRow} />
     } else {
       entryDetail = <p></p>
     }
-    console.log(progress);
 
     return (
       <div className='report'>
         <h1>Report</h1>
-        <div className='button-container' onClick={() => this.props.history.push('/')}>
-          <AddButton className='addButton' buttonText='Back' />
+        <div className='button-container' >
+          <Button className='addButton' buttonText='Back' onClick={() => this.props.history.push('/')} />
         </div>
+        <Tabs value={tab} onChange={(e, value) => this.setState({tab: value})} aria-label="simple tabs example">
+          <Tab label="Models" />
+          <Tab label="Predictions" />
+          <Tab label="Log" />
+        </Tabs>
+
         <div className='report-container' style={{ display: 'flex', flexFlow: 'row' }}>
+
           {!progress && <p>Fetching progress from server...</p>}
-          {progress && (
+          {progress && tab === 1 && (
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Balancer / Model</TableCell>
+                  <TableCell>Submitted at</TableCell>
+                  <TableCell>Status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {progress.predict && 
+                  Object.keys(progress.predict).map(k => {
+                    const data = progress.predict[k]
+                    const status = (<StatusDisplay status={data.status}/>)
+                    return <TableRow key={k}>
+                      <TableCell>{data.name}</TableCell>
+                      <TableCell>{data.balancer} / {data.model}</TableCell>
+                      <TableCell>{moment(data.start).format('LLLL')}</TableCell>
+                      <TableCell>{data.status === 'DONE' ? <a target="_blank" href={`/predictions/${specieName}/${k}`}>{status}</a> : status}</TableCell>
+                    </TableRow>
+                  })
+                }
+              </TableBody>
+            </Table>
+          )}
+          {progress && tab !== 1 && (
             <>
               <Table>
                 <TableHead>
@@ -107,7 +145,7 @@ class Report extends React.Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {progress.preprocess && (
+                  {progress.preprocess && (showComputations || progress.preprocess.status !== 'DONE') && (
                     <StepProgress now={progress.now} step={progress.preprocess}>
                       Preprocess the dataset
                     </StepProgress>
@@ -116,12 +154,14 @@ class Report extends React.Component {
                     const data = progress.bal[bal]
                     return (
                       <>
-                        <StepProgress now={progress.now} step={data.balance}>
-                          Balancer: {bal} - Balancing
-                        </StepProgress>
+                        {(showComputations || data.balance.status !== 'DONE') && (
+                          <StepProgress now={progress.now} step={data.balance}>
+                            Balancer: {bal} - Balancing
+                          </StepProgress>
+                        )}
                         {data.model && Object.keys(data.model).map(model => (
-                          <StepProgress now={progress.now} step={data.model[model]}>
-                            <span style={{paddingLeft:'32px'}}>Balancer: {bal}, Model Type: {model}</span>
+                          <StepProgress now={progress.now} step={data.model[model]} runPredict={() => window.location.hash=`/predict/${specieName}/${bal}/${model}`}>
+                            <span style={{paddingLeft: showComputations ? '32px' : undefined }}>Balancer: {bal}, Model Type: {model}</span>
                           </StepProgress>
                         ))}
                       </> 

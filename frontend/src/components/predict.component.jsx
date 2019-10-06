@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './add_species.styles.css';
 import InputField from './input-field.component';
 import MultiLineInput from './multiline-input.component';
 import AddButton from './button.component';
@@ -10,28 +9,28 @@ import {DropzoneArea} from 'material-ui-dropzone';
 
 
 //this can be a functional component.
-class Add_Species extends Component {
+class Predict extends Component {
 
   constructor() {
     super();
 
     this.state = {
 
-      scientific_name: "",
-      common_name: "",
-      description: "",
+      name: "",
       files: null,
     }
   }
 
   submitPost = () => {
-    let { history } = this.props;
-    let specieName = this.state.scientific_name.replace(" ","_").toLowerCase()
+    let { history, match: {params: {specie_name, balancer, model}} } = this.props;
     history.push("/");
-    superagent('post', '/').send({ scientific_name: specieName, common_name: this.state.common_name, description: this.state.description }).then((data) => {
-      console.log("The server has recieved", data.body);
-    });
-    superagent('post','/upload').attach('file', this.state.files[0]).set('specieName',`${this.state.scientific_name}`).then(res => console.log(res));
+    superagent('post','/predict')
+      .attach('file', this.state.files[0])
+      .set('specieName',specie_name)
+      .set('balancer',balancer)
+      .set('model',model)
+      .set('name', this.state.name)
+      .then(res => console.log(res));
   }
 
   handleChange = event => {
@@ -44,16 +43,15 @@ class Add_Species extends Component {
   }
 
   render() {
+    console.log(this.state.files) 
     return (
       <div className='add-species'>
-        <h1>Add New Species</h1>
+        <h1>Predict new data</h1>
 
         <div className='details-container' style={{ display: "flex" }}>
           <div className='details-form' style={{ marginRight: "20px" }}>
-            <h3>Specie Details</h3>
-            <InputField id="scientific_name" fieldName={'Scientific Name'} onChange={this.handleChange} autoFocus />
-            <InputField id="common_name" fieldName={'Common Name'} onChange={this.handleChange} />
-            <MultiLineInput id="description" fieldName='Description' onChange={this.handleChange} />
+            <h3>Details for this set of predictions</h3>
+            <InputField id="name" fieldName={'Name'} onChange={this.handleChange} />
           </div>
           <DropzoneArea
             onChange={this.attachFile}
@@ -61,7 +59,6 @@ class Add_Species extends Component {
             acceptedFiles={['text/csv']}
             filesLimit = {1}
           />
-          {/* <FileUpload/> */}
         </div>
         <div className='button-container' onClick={this.submitPost}>
           <AddButton className='addButton' buttonText='Save' />
@@ -72,4 +69,4 @@ class Add_Species extends Component {
   }
 }
 
-export default withRouter(Add_Species);
+export default withRouter(Predict);

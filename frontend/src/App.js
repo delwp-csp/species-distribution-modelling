@@ -2,6 +2,7 @@ import React from "react";
 import Home from "./components/home.component";
 import Add_Species from "./components/add_species.component";
 import Report from "./components/report.component";
+import Predict from './components/predict.component'
 import { HashRouter, Switch, Route } from "react-router-dom";
 
 // https://www.styled-components.com/
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/add-species" component={Add_Species} />
           <Route path = "/report/:specie_name" component={Report} />
+          <Route path = "/predict/:specie_name/:balancer/:model" component={Predict} />
         </Switch>
       </HashRouter>
 

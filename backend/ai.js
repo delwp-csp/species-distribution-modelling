@@ -90,14 +90,15 @@ function process_step(tag, args, infile, outfile) {
         return data
     })
 }
+const fileUtil = specieName => file => file ? (utils.getDirName(specieName) + '/' + file + (file.indexOf('.') === -1 ? '.csv' : '')) : false
 
 function process(_specieName) {
     const specieName = _specieName.replace(' ', '_').toLowerCase()
     console.log(`Processing ${specieName}`)
 
     set_progress(`${specieName}.status`, 'RUNNING')
-    const dir = utils.getDirName(specieName)
-    const file = file => file ? (dir + '/' + file + (file.indexOf('.') === -1 ? '.csv' : '')) : false
+
+    const file = fileUtil(specieName)
 
     process_step(`${specieName}.preprocess`, ['preprocess'], file('observations'), file('preprocess')).then(() => {
         return Promise.all(balancers.map(balancer => {
@@ -125,7 +126,28 @@ function process(_specieName) {
 }
 
 
+function predict({
+    specieName,
+    name,
+    model,
+    balancer,
+    filePath
+}) {
+    
+    if (!balancers.includes(balancer) || !models.includes(model)) {
+        return
+    }
+    const file = fileUtil(specieName)
+
+    const id = utils.id()
+    set_progress(`${specieName}.predict.${id}.name`, name)
+    set_progress(`${specieName}.predict.${id}.model`, model)
+    set_progress(`${specieName}.predict.${id}.balancer`, balancer)
+    process_step(`${specieName}.predict.${id}`, ['predict', '-m', file(`${balancer}-${model}.model`)], filePath, file(`predictions-${id}`))
+}
+
 module.exports = {
     process,
-    get_progress
+    get_progress,
+    predict
 }

@@ -16,14 +16,23 @@ const specieJsonPath = `${utils.DATA_DIR}/species.json`;
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    const dirName = utils.getDirName(req.header('specieName'))
+
+    let dirName = utils.getDirName(req.header('specieName'))
     if (!fs.existsSync(dirName)) {
       fs.mkdirSync(dirName)
     }
     cb(null, dirName);
   },
   filename: function(req, file, cb) {
-    cb(null, 'observations.csv');
+    if (req.path === '/upload') {
+      cb(null, 'observations.csv');
+    } else if (req.path === '/predict') {
+      cb(null, `predict-${Date.now()}.csv`)
+    } else {
+      cb(new Error('unknown path'), null)
+    }
+    
+    
   }
 });
 
@@ -47,7 +56,7 @@ app.get("/distribution/:specieName/:balancer/:model", (req, res) => {
   if (fs.existsSync(fname)) {
     res.sendFile(fname)
   } else {
-    res.status(404);
+    res.status(404).end();
   }
 })
 
@@ -69,6 +78,36 @@ app.post("/upload", (req, res) => {
   });
 });
 
+app.post("/predict", (req, res) => {
+
+  upload(req, res, err => {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      return res.status(500).json(err);
+    }
+
+    ai.predict({
+      filePath: req.file.path,
+      name: req.header('name'),
+      model: req.header('model'),
+      balancer: req.header('balancer'),
+      specieName: req.header('specieName')
+    })
+    return res.status(200).end();
+  });
+});
+
+app.get('/predictions/:specieName/:id', (req, res) => {
+  const {specieName, id} = req.params
+  const fname = `${utils.DATA_DIR}/${specieName.replace(/[^a-zA-Z]/g,'_')}/predictions-${id}.csv`
+
+  if (fs.existsSync(fname)) {
+    res.sendFile(fname)
+  } else {
+    res.status(404).end();
+  }
+})
 const port = process.env.PORT || 80;
 
 app.listen(port, () => {
