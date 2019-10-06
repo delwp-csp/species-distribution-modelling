@@ -10,6 +10,10 @@ from joblib import load
 grid_filename = os.path.dirname(os.path.realpath(__file__)) + '/grid.csv'
 
 def generate_grid():
+    if os.path.exists(grid_filename):
+        print("Grid already exists, returning")
+        return
+
     print("Grid not found - Generating")
     xspace = linspace(2128000, 2960000, 80)
     yspace = linspace(2258000, 2824000, 80)

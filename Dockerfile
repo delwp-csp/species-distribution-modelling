@@ -26,4 +26,4 @@ RUN rm -r /delwp/frontend
 RUN mkdir delwp/dataset
 RUN conda init bash
 
-CMD bash -c "source ~/.bashrc && conda activate gdal && cd delwp/backend && node server.js"
+CMD bash -c "source ~/.bashrc && conda activate gdal && python3 delwp/ai/main.py init && cd delwp/backend && node server.js"

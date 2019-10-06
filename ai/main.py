@@ -46,6 +46,9 @@ def init_parser():
 	setup_files(p_plot)
 	p_plot.set_defaults(func=plot)
 
+	p_init = subparsers.add_parser('init', help='Ensure that the system is initialised for the plots')
+	p_init.set_defaults(func=generate_grid)
+
 	return parser
 
 
