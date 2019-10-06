@@ -16,8 +16,8 @@ def generate_grid(args):
         return
 
     print("Grid not found - Generating")
-    xspace = linspace(2128000, 2960000, 80)
-    yspace = linspace(2258000, 2824000, 80)
+    xspace = linspace(2128000, 2960000, 100)
+    yspace = linspace(2258000, 2824000, 100)
     x_coords, y_coords = meshgrid(xspace, yspace)
 
     dt = pd.DataFrame({ "vic_x": x_coords.flatten(), "vic_y": y_coords.flatten()})
