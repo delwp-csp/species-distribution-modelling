@@ -4,7 +4,7 @@ import pandas as pd
 
 def conv_to_point(row):
     geo = ogr.Geometry(ogr.wkbPoint)
-    geo.AddPoint(row['vic_x'], row['vic_y'])
+    geo.AddPoint(int(row['vic_x']), int(row['vic_y']))
     geo.InShape = False
     return geo
 
