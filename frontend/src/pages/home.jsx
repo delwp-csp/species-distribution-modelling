@@ -16,14 +16,17 @@ class Home extends Component {
   constructor() {
     super()
     this.state = {
+      species: [],
       serverRunning: true
     }
   }
 
   componentDidMount() {
-    superagent("get", "./get_data").catch(err =>
-      this.setState({ serverRunning: false })
-    )
+    superagent("get", "./get_data")
+      .then(data => this.setState({ species: data.body }))
+      .catch(err =>
+        this.setState({ serverRunning: false })
+      )
   }
 
   render() {
@@ -37,7 +40,7 @@ class Home extends Component {
           >
             <Button buttonText="Add new species →" />
           </div>
-          <CardList />
+          <CardList speices={this.state.species}/>
         </div>
       )
     } else {
