@@ -1,72 +1,76 @@
-import React, { Component } from 'react';
-import InputField from './input-field.component';
-import MultiLineInput from './multiline-input.component';
-import AddButton from './button.component';
-import superagent from 'superagent';
-import { withRouter } from 'react-router-dom';
-import {DropzoneArea} from 'material-ui-dropzone';
-
-
+import React, { Component } from "react"
+import InputField from "./input-field.component"
+import MultiLineInput from "./multiline-input.component"
+import AddButton from "./button.component"
+import superagent from "superagent"
+import { withRouter } from "react-router-dom"
+import { DropzoneArea } from "material-ui-dropzone"
 
 //this can be a functional component.
 class Predict extends Component {
-
   constructor() {
-    super();
+    super()
 
     this.state = {
-
       name: "",
-      files: null,
+      files: null
     }
   }
 
   submitPost = () => {
-    let { history, match: {params: {specie_name, balancer, model}} } = this.props;
-    history.push("/");
-    superagent('post','/predict')
-      .attach('file', this.state.files[0])
-      .set('specieName',specie_name)
-      .set('balancer',balancer)
-      .set('model',model)
-      .set('name', this.state.name)
-      .then(res => console.log(res));
+    let {
+      history,
+      match: {
+        params: { specie_name, balancer, model }
+      }
+    } = this.props
+    history.push("/")
+    superagent("post", "/predict")
+      .attach("file", this.state.files[0])
+      .set("specieName", specie_name)
+      .set("balancer", balancer)
+      .set("model", model)
+      .set("name", this.state.name)
+      .then(res => console.log(res))
   }
 
   handleChange = event => {
-    let data = event.target.value.replace(/\n|\r/g, "");
-    this.setState({ [event.target.id]: data });
+    let data = event.target.value.replace(/\n|\r/g, "")
+    this.setState({ [event.target.id]: data })
   }
 
   attachFile = file => {
-    this.setState({ files: file });
+    this.setState({ files: file })
   }
 
   render() {
-    console.log(this.state.files) 
+    console.log(this.state.files)
     return (
-      <div className='add-species'>
+      <div className="add-species">
         <h1>Predict new data</h1>
 
-        <div className='details-container' style={{ display: "flex" }}>
-          <div className='details-form' style={{ marginRight: "20px" }}>
+        <div className="details-container" style={{ display: "flex" }}>
+          <div className="details-form" style={{ marginRight: "20px" }}>
             <h3>Details for this set of predictions</h3>
-            <InputField id="name" fieldName={'Name'} onChange={this.handleChange} />
+            <InputField
+              id="name"
+              fieldName={"Name"}
+              onChange={this.handleChange}
+            />
           </div>
           <DropzoneArea
             onChange={this.attachFile}
-            dropzoneText={'Drag and drop a csv file here or click to upload'}
-            acceptedFiles={['text/csv']}
-            filesLimit = {1}
+            dropzoneText={"Drag and drop a csv file here or click to upload"}
+            acceptedFiles={["text/csv"]}
+            filesLimit={1}
           />
         </div>
-        <div className='button-container' onClick={this.submitPost}>
-          <AddButton className='addButton' buttonText='Save' />
+        <div className="button-container" onClick={this.submitPost}>
+          <AddButton className="addButton" buttonText="Save" />
         </div>
       </div>
-
-    );
+    )
   }
 }
 
-export default withRouter(Predict);
+export default withRouter(Predict)
