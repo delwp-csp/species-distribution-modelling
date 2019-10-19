@@ -15,7 +15,7 @@ app.use(cors());
 const specieJsonPath = `${utils.DATA_DIR}/species.json`;
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
 
     let dirName = utils.getDirName(req.header('specieName'))
     if (!fs.existsSync(dirName)) {
@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
     }
     cb(null, dirName);
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     if (req.path === '/upload') {
       cb(null, 'observations.csv');
     } else if (req.path === '/predict') {
@@ -31,8 +31,8 @@ const storage = multer.diskStorage({
     } else {
       cb(new Error('unknown path'), null)
     }
-    
-    
+
+
   }
 });
 
@@ -51,8 +51,8 @@ app.get("/progress/:specieName", (req, res) => {
 })
 
 app.get("/distribution/:specieName/:balancer/:model", (req, res) => {
-  const {specieName, balancer, model} = req.params
-  const fname = `${utils.DATA_DIR}/${specieName.replace(/[^a-zA-Z]/g,'_')}/${balancer}-${model}.png`
+  const { specieName, balancer, model } = req.params
+  const fname = `${utils.DATA_DIR}/${specieName.replace(/[^a-zA-Z]/g, '_')}/${balancer}-${model}.png`
   if (fs.existsSync(fname)) {
     res.sendFile(fname)
   } else {
@@ -99,8 +99,8 @@ app.post("/predict", (req, res) => {
 });
 
 app.get('/predictions/:specieName/:id', (req, res) => {
-  const {specieName, id} = req.params
-  const fname = `${utils.DATA_DIR}/${specieName.replace(/[^a-zA-Z]/g,'_')}/predictions-${id}.csv`
+  const { specieName, id } = req.params
+  const fname = `${utils.DATA_DIR}/${specieName.replace(/[^a-zA-Z]/g, '_')}/predictions-${id}.csv`
 
   if (fs.existsSync(fname)) {
     res.sendFile(fname)
@@ -108,7 +108,8 @@ app.get('/predictions/:specieName/:id', (req, res) => {
     res.status(404).end();
   }
 })
-const port = process.env.PORT || 80;
+// const port = process.env.PORT || 80;
+const port = 5000;
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`);

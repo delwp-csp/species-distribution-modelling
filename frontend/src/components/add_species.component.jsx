@@ -5,7 +5,7 @@ import MultiLineInput from './multiline-input.component';
 import AddButton from './button.component';
 import superagent from 'superagent';
 import { withRouter } from 'react-router-dom';
-import {DropzoneArea} from 'material-ui-dropzone';
+import { DropzoneArea } from 'material-ui-dropzone';
 
 
 
@@ -26,12 +26,12 @@ class Add_Species extends Component {
 
   submitPost = () => {
     let { history } = this.props;
-    let specieName = this.state.scientific_name.replace(" ","_").toLowerCase()
+    let specieName = this.state.scientific_name.replace(" ", "_").toLowerCase()
     history.push("/");
     superagent('post', '/').send({ scientific_name: specieName, common_name: this.state.common_name, description: this.state.description }).then((data) => {
       console.log("The server has recieved", data.body);
     });
-    superagent('post','/upload').attach('file', this.state.files[0]).set('specieName',`${this.state.scientific_name}`).then(res => console.log(res));
+    superagent('post', '/upload').attach('file', this.state.files[0]).set('specieName', `${this.state.scientific_name}`).then(res => console.log(res));
   }
 
   handleChange = event => {
@@ -58,8 +58,8 @@ class Add_Species extends Component {
           <DropzoneArea
             onChange={this.attachFile}
             dropzoneText={'Drag and drop a csv file here or click to upload'}
-            acceptedFiles={['text/csv']}
-            filesLimit = {1}
+            acceptedFiles={['.csv,text/csv']}
+            filesLimit={1}
           />
           {/* <FileUpload/> */}
         </div>
