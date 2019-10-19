@@ -1,12 +1,10 @@
 import React, { Component } from "react"
-import InputField from "./input-field.component"
-import MultiLineInput from "./multiline-input.component"
-import AddButton from "./button.component"
+import InputField from "../components/input-field"
+import Button from "../components/button"
 import superagent from "superagent"
 import { withRouter } from "react-router-dom"
 import { DropzoneArea } from "material-ui-dropzone"
 
-//this can be a functional component.
 class Predict extends Component {
   constructor() {
     super()
@@ -66,7 +64,7 @@ class Predict extends Component {
           />
         </div>
         <div className="button-container" onClick={this.submitPost}>
-          <AddButton className="addButton" buttonText="Save" />
+          <Button buttonText="Save" />
         </div>
       </div>
     )

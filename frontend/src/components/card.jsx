@@ -1,9 +1,5 @@
 import React from "react"
-import "./card.styles.css"
-// import gramini from '../img/gramini.jpg';
-// import affinis from '../img/affinis.jpg'
-// import ewingii from '../img/ewingii.jpg'
-// import antechinus from '../img/antechinus.jpg'
+import "./card.css"
 
 export const Card = props => (
   <div className="card-container" onClick={props.onClick}>

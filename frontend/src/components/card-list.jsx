@@ -1,6 +1,6 @@
 import React from "react"
-import "./card-list.styles.css"
-import { Card } from "./card.component"
+import "./card-list.css"
+import { Card } from "./card"
 import superagent from "superagent"
 import { withRouter } from "react-router-dom"
 

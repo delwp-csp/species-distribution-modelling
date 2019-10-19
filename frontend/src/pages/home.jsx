@@ -1,7 +1,7 @@
 import React, { Component } from "react"
-import CardList from "./card-list.component"
-import AddButton from "./button.component"
-import "./home.styles.css"
+import CardList from "../components/card-list"
+import Button from "../components/button"
+import "./home.css"
 import superagent from "superagent"
 
 class Home extends Component {
@@ -27,7 +27,7 @@ class Home extends Component {
             className="button-container"
             onClick={() => this.props.history.push("/add-species")}
           >
-            <AddButton className="addButton" buttonText="Add new species →" />
+            <Button buttonText="Add new species →" />
           </div>
           <CardList />
         </div>

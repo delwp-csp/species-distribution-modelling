@@ -1,10 +1,7 @@
 import React from "react"
 import moment from "moment"
-import EntryDetail from "./entry-detail.component"
-import SimpleTable from "./table.component"
-import PaperSheet from "./paper-sheet.component"
-import "./report.styles.css"
-import Button from "./button.component"
+import "./report.css"
+import Button from "../components/button"
 import superagent from "superagent"
 
 import Table from "@material-ui/core/Table"
@@ -13,7 +10,6 @@ import TableCell from "@material-ui/core/TableCell"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 
-import AppBar from "@material-ui/core/AppBar"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
 
@@ -53,7 +49,7 @@ function StepProgress({ step, now, children, runPredict }) {
                 </pre>
               ))}
             <h2>Distribution Plot</h2>
-            {step.distribution_plot && <img src={step.distribution_plot} />}
+            {step.distribution_plot && <img alt="Distribution plot" src={step.distribution_plot} />}
             {runPredict && (
               <Button onClick={runPredict} buttonText="Run predictions" />
             )}
@@ -83,7 +79,6 @@ class Report extends React.Component {
   }
 
   componentDidMount() {
-    //Placeholder json data
     this.fetchProgress()
   }
 
@@ -101,22 +96,15 @@ class Report extends React.Component {
 
   render() {
     const { progress, tab } = this.state
-    let entryDetail
     const specieName = this.props.match.params.specie_name
 
     const showComputations = tab === 2
-    if (this.state.selectedRow != "none") {
-      entryDetail = <PaperSheet specieId={this.state.selectedRow} />
-    } else {
-      entryDetail = <p></p>
-    }
 
     return (
       <div className="report">
         <h1>Report</h1>
         <div className="button-container">
           <Button
-            className="addButton"
             buttonText="Back"
             onClick={() => this.props.history.push("/")}
           />
@@ -164,6 +152,7 @@ class Report extends React.Component {
                           {data.status === "DONE" ? (
                             <a
                               target="_blank"
+                              rel="noopener noreferrer"
                               href={`/predictions/${specieName}/${k}`}
                             >
                               {status}

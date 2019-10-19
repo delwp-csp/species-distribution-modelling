@@ -1,15 +1,10 @@
 import React from "react"
-import Home from "./components/home.component"
-import Add_Species from "./components/add_species.component"
-import Report from "./components/report.component"
-import Predict from "./components/predict.component"
+import Home from "./pages/home"
+import AddSpecies from "./pages/add-species"
+import Report from "./pages/report"
+import Predict from "./pages/predict"
 import { HashRouter, Switch, Route } from "react-router-dom"
 
-// https://www.styled-components.com/
-
-// function Heading({ children, color }) {
-//   return <h1 style={{ color }}>{children}</h1>
-// }
 
 function App() {
   return (
@@ -17,7 +12,7 @@ function App() {
       <HashRouter>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/add-species" component={Add_Species} />
+          <Route exact path="/add-species" component={AddSpecies} />
           <Route path="/report/:specie_name" component={Report} />
           <Route
             path="/predict/:specie_name/:balancer/:model"
@@ -25,10 +20,6 @@ function App() {
           />
         </Switch>
       </HashRouter>
-
-      {/* {page === 'home' && <Home metadata={metadata}/>}
-      {page === 'add-species' && <Add_Species metadata={metadata}/>}      
-      {page === 'report' && <Report metadata={metadata}/>} */}
     </div>
   )
 }

@@ -1,13 +1,13 @@
 import React, { Component } from "react"
-import "./add_species.styles.css"
-import InputField from "./input-field.component"
-import MultiLineInput from "./multiline-input.component"
-import AddButton from "./button.component"
+import "./add-species.css"
+import InputField from "../components/input-field"
+import MultiLineInput from "../components/multiline-input"
+import Button from "../components/button"
 import superagent from "superagent"
 import { withRouter } from "react-router-dom"
 import { DropzoneArea } from "material-ui-dropzone"
 
-//this can be a functional component.
+
 class Add_Species extends Component {
   constructor() {
     super()
@@ -80,10 +80,9 @@ class Add_Species extends Component {
             filesLimit={1}
             maxFileSize={Infinity}
           />
-          {/* <FileUpload/> */}
         </div>
         <div className="button-container" onClick={this.submitPost}>
-          <AddButton className="addButton" buttonText="Save" />
+          <Button buttonText="Save" />
         </div>
       </div>
     )

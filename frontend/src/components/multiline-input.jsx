@@ -1,5 +1,4 @@
 import React from "react"
-import clsx from "clsx"
 import { makeStyles } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
 
@@ -7,8 +6,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
     flexWrap: "wrap",
-    width: 500,
-    marginBottom: 20
+    width: 500
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -23,18 +21,21 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function InputField({ fieldName, ...props }) {
+export default function MultiLineInput({ fieldName, ...props }) {
   const classes = useStyles()
 
   return (
-    <div className={classes.container} noValidate autoComplete="off">
+    <form className={classes.container} noValidate autoComplete="off">
       <TextField
         label={fieldName}
+        multiline
+        rows="4"
+        defaultValue=""
         className={classes.textField}
         margin="normal"
         variant="outlined"
         {...props}
       />
-    </div>
+    </form>
   )
 }

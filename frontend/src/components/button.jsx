@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function AddButton({ buttonText, onClick }) {
+export default function CustomButton({ buttonText, onClick }) {
   const classes = useStyles()
 
   return (
