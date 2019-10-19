@@ -1,3 +1,11 @@
+/*
+  server.js
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+*/
+
 const express = require("express")
 const bodyparser = require("body-parser")
 const fs = require("fs")

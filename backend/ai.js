@@ -1,3 +1,11 @@
+/*
+  ai.js
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+*/
+
 const child_process = require("child_process")
 const fs = require("fs")
 const utils = require("./utils")
