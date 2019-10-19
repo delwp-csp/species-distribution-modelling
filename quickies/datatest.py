@@ -1,3 +1,11 @@
+"""
+datatest.py
+
+    An initial attempt at grabbing environment data from raster and vector files
+    Not used in the final project, simply was a learning excersize.
+
+"""
+
 import sys
 try:
     from osgeo import ogr, osr, gdal

@@ -1,3 +1,13 @@
+"""
+analyse_unreliable_data.py
+
+This file was used to check how many species have unreliable records that we can use to train our models, and how much balancing work would need to be done
+It isn't used, or necessary for the final project, but was helpful in us understanding the data given
+
+Call with `python3 analyse_unreliable_data.py {filename}`
+
+"""
+
 import csv
 import sys
 from collections import defaultdict

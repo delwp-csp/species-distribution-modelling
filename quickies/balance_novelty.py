@@ -1,3 +1,13 @@
+"""
+balance_novelty.py
+
+    An initial attempt at the novelty-detector based balancing method
+    It is here that we found that one class SVMs were not useful for balancing.
+    This file is not used in the final project, and was used simply to learn how this technique works.
+
+"""
+
+
 import pandas as pd
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn import svm

@@ -1,3 +1,10 @@
+"""
+filter_columns.py
+
+	Initial attempt to preprocess the data for the model
+	This attempt is not used in the final project, we refactored it to use pandas instead.
+"""
+
 import csv
 import transform
 import vector

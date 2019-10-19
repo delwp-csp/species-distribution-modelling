@@ -1,3 +1,10 @@
+"""
+main.py
+    Our initial attempt at a working model. 
+    Was used during development to understand how various libaries work.
+    Not in use in the final application.
+"""
+
 import sys
 #try: 
 import pandas as pd
