@@ -1,3 +1,11 @@
+"""
+  lib/vector.py
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+"""
+
 from osgeo import ogr, osr, gdal
 from pathlib import Path
 import pandas as pd

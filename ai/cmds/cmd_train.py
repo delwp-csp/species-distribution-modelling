@@ -1,3 +1,11 @@
+"""
+  cmds/cmd_train.py
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+"""
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn import svm

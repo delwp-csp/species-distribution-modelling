@@ -1,3 +1,11 @@
+"""
+  cmds/cmd_test_train.py
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+"""
+
 from sklearn.metrics import (
     accuracy_score,
     f1_score,

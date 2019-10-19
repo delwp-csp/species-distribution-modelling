@@ -1,3 +1,11 @@
+"""
+  cmds/cmd_balance.py
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+"""
+
 import sys
 import pandas as pd
 from lib.balance import traditional_balance, novelty_balance

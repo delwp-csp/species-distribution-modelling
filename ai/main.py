@@ -1,3 +1,11 @@
+"""
+  main.py
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+"""
+
 #!/usr/bin/env python3
 import argparse
 import sys

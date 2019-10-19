@@ -1,3 +1,11 @@
+"""
+  cmds/cmd_plot.py
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+"""
+
 import pandas as pd
 from numpy import linspace, meshgrid
 from lib.add_env_data import add_columns
