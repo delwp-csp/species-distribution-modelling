@@ -60,6 +60,7 @@ class Add_Species extends Component {
             dropzoneText={'Drag and drop a csv file here or click to upload'}
             acceptedFiles={['.csv,text/csv']}
             filesLimit={1}
+            maxFileSize={Infinity}
           />
           {/* <FileUpload/> */}
         </div>
