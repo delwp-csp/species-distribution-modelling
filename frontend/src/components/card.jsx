@@ -4,6 +4,8 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+
+  This component a small card for the specie, showing the basic details about it
 */
 
 import React from "react"

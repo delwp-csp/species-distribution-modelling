@@ -4,6 +4,7 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  A restyled text input so that it fits our application's styles
 */
 
 import React from "react"
