@@ -8,7 +8,9 @@ try:
     import pandas as pd
     import numpy as np
 except:
-    print("Failed to load packages, make sure your conda environment is setup correctly")
+    print(
+        "Failed to load packages, make sure your conda environment is setup correctly"
+    )
     sys.exit(1)
 
 
@@ -18,8 +20,9 @@ def get_raster_data(data, fname):
     bands_count = rp.data_source.RasterCount
     retdf = pd.DataFrame()
     for band_index in range(bands_count):
-        retdf['{}_{}'.format(column, band_index)] = data.apply(
-            lambda row: rp.GetValueAt(row['vic_x'], row['vic_y'], band_index), axis=1)
+        retdf["{}_{}".format(column, band_index)] = data.apply(
+            lambda row: rp.GetValueAt(row["vic_x"], row["vic_y"], band_index), axis=1
+        )
     return retdf
 
 
@@ -33,6 +36,7 @@ def process_file(data, ftype, fname):
             return vector.ProcessPoints(data, fname)
     else:
         print("Warning: skipping file {} since it doesn't exist".format(fname))
+
 
 raster_files = [
     "../raw_dataset/75m_dem_streams_burned_sept2012/75m_dem_streams_burned_sept2012.ers",
@@ -49,21 +53,24 @@ raster_files = [
     "../raw_dataset/sept2014JanRainfall/sept2014JanRainfall.ers",
     "../raw_dataset/sept2014JulRainfall/sept2014JulRainfall.ers",
     "../raw_dataset/vegtype3_4/vegtype3_4.ers",
-    "../raw_dataset/wetness_index_saga_sept2012/wetness_index_saga_sept2012.ers"
+    "../raw_dataset/wetness_index_saga_sept2012/wetness_index_saga_sept2012.ers",
 ]
 
 vector_files = [
-    '../raw_dataset/VMLITE/VMLITE_BUILT_UP_AREA.shp',
-    '../raw_dataset/VMLITE/VMLITE_FOREST_SU2.shp',
+    "../raw_dataset/VMLITE/VMLITE_BUILT_UP_AREA.shp",
+    "../raw_dataset/VMLITE/VMLITE_FOREST_SU2.shp",
     #'../raw_dataset/VMLITE/VMLITE_FOREST_SU3.shp',
     #'../raw_dataset/VMLITE/VMLITE_FOREST_SU5.shp',
     #'../raw_dataset/VMLITE/VMLITE_HY_WATER_AREA.shp',
     #'../raw_dataset/VMLITE/VMLITE_HY_WATERCOURSE.shp',
-    '../raw_dataset/VMLITE/VMLITE_PUBLIC_LAND_SU3.shp',
+    "../raw_dataset/VMLITE/VMLITE_PUBLIC_LAND_SU3.shp",
     #'../raw_dataset/VMLITE/VMLITE_PUBLIC_LAND_SU5.shp'
 ]
 
-data_files = [("raster", i) for i in raster_files] + [("vector", i) for i in vector_files]
+data_files = [("raster", i) for i in raster_files] + [
+    ("vector", i) for i in vector_files
+]
+
 
 def add_columns(data):
 
@@ -76,5 +83,5 @@ def add_columns(data):
     return pd.concat([data, result], axis=1)
 
 
-if __name__ == '__main__':
-    data = pd.read_csv('../dataset/Agile_Antechinus.csv')
+if __name__ == "__main__":
+    data = pd.read_csv("../dataset/Agile_Antechinus.csv")

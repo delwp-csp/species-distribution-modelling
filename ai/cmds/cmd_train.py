@@ -5,16 +5,14 @@ from joblib import dump
 from lib.train import train_model
 
 
-
-
 def train(args):
-	if not args.outfile:
-		print("Warning: Training data without saving the model is useless...")
+    if not args.outfile:
+        print("Warning: Training data without saving the model is useless...")
 
-	dataset = pd.read_csv(args.infile, index_col=0)
-	model = train_model(dataset, dataset.is_reliable, args.training_type)
+    dataset = pd.read_csv(args.infile, index_col=0)
+    model = train_model(dataset, dataset.is_reliable, args.training_type)
 
-	if args.modelfile:
-		dump(model, args.modelfile)
+    if args.modelfile:
+        dump(model, args.modelfile)
 
-	return model
+    return model

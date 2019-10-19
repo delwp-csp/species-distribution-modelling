@@ -6,10 +6,11 @@ from lib.filter_columns import filter_columns
 from lib.vector import ProcessPoints
 from lib.add_env_data import add_columns
 
+
 def preprocess(args):
     if not args.outfile:
         print("Warning: Preprocessing data without an outfile is useless...")
-    
+
     print("Reading csv...", flush=True)
     dataset = pd.read_csv(args.infile)
     print("Filtering columns...", flush=True)
@@ -21,8 +22,7 @@ def preprocess(args):
     print("Adding environmental data", flush=True)
     data = add_columns(data)
 
-    
-    if (args.outfile):
+    if args.outfile:
         print("Writing to file...", flush=True)
         data.to_csv(args.outfile)
 

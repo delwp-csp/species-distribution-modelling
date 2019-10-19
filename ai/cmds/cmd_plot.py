@@ -7,7 +7,8 @@ import os.path
 from joblib import load
 
 
-grid_filename = os.path.dirname(os.path.realpath(__file__)) + '/grid.csv'
+grid_filename = os.path.dirname(os.path.realpath(__file__)) + "/grid.csv"
+
 
 def generate_grid(args):
     # Take args so that it doesn't crash
@@ -20,9 +21,10 @@ def generate_grid(args):
     yspace = linspace(2258000, 2824000, 100)
     x_coords, y_coords = meshgrid(xspace, yspace)
 
-    dt = pd.DataFrame({ "vic_x": x_coords.flatten(), "vic_y": y_coords.flatten()})
+    dt = pd.DataFrame({"vic_x": x_coords.flatten(), "vic_y": y_coords.flatten()})
     dt = add_columns(dt)
     dt.to_csv(grid_filename)
+
 
 def plot(args):
 
@@ -35,14 +37,13 @@ def plot(args):
     pred = model.predict(grid_df.drop(columns=["vic_x", "vic_y"]))
     fig, axs = plt.subplots(1, 2, figsize=(16, 6))
 
-    
     dist_r = grid_df[pred == 1]
     dist_u = grid_df[pred != 1]
-    axs[0].set_title('Distribution with user data')
-    axs[0].scatter(x = dist_r.vic_x, y=dist_r.vic_y, c = '#009900', s=2)
-    axs[0].scatter(x = dist_u.vic_x, y=dist_u.vic_y, c = '#ff0000', s=2)
-    axs[0].scatter(x = d.vic_x, y=d.vic_y, c = '#000099', s=2)
-    axs[1].set_title('Distribution')
-    axs[1].scatter(x = dist_r.vic_x, y=dist_r.vic_y, c = '#009900', s=2)
-    axs[1].scatter(x = dist_u.vic_x, y=dist_u.vic_y, c = '#ff0000', s=2)
+    axs[0].set_title("Distribution with user data")
+    axs[0].scatter(x=dist_r.vic_x, y=dist_r.vic_y, c="#009900", s=2)
+    axs[0].scatter(x=dist_u.vic_x, y=dist_u.vic_y, c="#ff0000", s=2)
+    axs[0].scatter(x=d.vic_x, y=d.vic_y, c="#000099", s=2)
+    axs[1].set_title("Distribution")
+    axs[1].scatter(x=dist_r.vic_x, y=dist_r.vic_y, c="#009900", s=2)
+    axs[1].scatter(x=dist_u.vic_x, y=dist_u.vic_y, c="#ff0000", s=2)
     plt.savefig(args.outfile)
