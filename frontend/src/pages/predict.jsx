@@ -1,3 +1,11 @@
+/*
+  pages/predict.jsx
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+*/
+
 import React, { Component } from "react"
 import InputField from "../components/input-field"
 import Button from "../components/button"

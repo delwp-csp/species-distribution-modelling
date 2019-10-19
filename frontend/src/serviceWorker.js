@@ -1,3 +1,11 @@
+/*
+  serviceWorker.js
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+*/
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 

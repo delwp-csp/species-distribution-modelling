@@ -1,3 +1,11 @@
+/*
+  App.js
+
+  FIT3162 - Team 10 - Final Year Computer Science Project
+  Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
+
+*/
+
 import React from "react"
 import Home from "./pages/home"
 import AddSpecies from "./pages/add-species"
