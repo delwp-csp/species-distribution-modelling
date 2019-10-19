@@ -4,6 +4,8 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  A restyled text input so that it fits our application's styles, and supports
+  multiple lines
 */
 
 import React from "react"
@@ -38,7 +40,6 @@ export default function MultiLineInput({ fieldName, ...props }) {
         label={fieldName}
         multiline
         rows="4"
-        defaultValue=""
         className={classes.textField}
         margin="normal"
         variant="outlined"
