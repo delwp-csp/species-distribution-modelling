@@ -4,22 +4,26 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  Script to generate plots for the species distribution data
+
 """
 
 import pandas as pd
 from numpy import linspace, meshgrid
 from lib.add_env_data import add_columns
 import matplotlib.pyplot as plt
-import sys
 import os.path
 from joblib import load
 
 
-grid_filename = os.path.dirname(os.path.realpath(__file__)) + "/grid.csv"
+grid_filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), "grid.csv")
 
 
 def generate_grid(args):
-    # Take args so that it doesn't crash
+    """
+    Method to generate points so plotting them is efficient
+    :param args: the arguments parsed from the command line interface (not used in the function, however, have to take so it doesn't crash)
+    """
     if os.path.exists(grid_filename):
         print("Grid already exists, returning")
         return
@@ -35,7 +39,10 @@ def generate_grid(args):
 
 
 def plot(args):
-
+    """
+    Method to generate the plots for the species distribution
+    :param args: the arguments parsed from the command line interface
+    """
     if not os.path.exists(grid_filename):
         generate_grid(args)
 

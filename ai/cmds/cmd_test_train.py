@@ -4,6 +4,8 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  Script to train the dataset and test the reliability of the trained models
+
 """
 
 from sklearn.metrics import (
@@ -15,7 +17,6 @@ from sklearn.metrics import (
 )
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn import svm
 from joblib import dump
 from lib.train import train_model, predict_model
 
@@ -29,6 +30,9 @@ scores = [
 
 
 def test_train(args):
+    """
+    :param args: the arguments parsed from the command line interface
+    """
     # todo: integrate predict command and drop commands
 
     dataset = pd.read_csv(args.infile, index_col=0)

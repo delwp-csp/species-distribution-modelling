@@ -4,6 +4,8 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  Script to predict the reliability of a dataset using the selected model
+
 """
 
 import pandas as pd
@@ -15,6 +17,10 @@ from lib.add_env_data import add_columns
 
 
 def predict(args):
+    """
+    :param args: the arguments parsed from the command line interface
+    :return: reliability predictions of the dataset
+    """
     dataset = pd.read_csv(args.infile)
 
     data = filter_columns(dataset)

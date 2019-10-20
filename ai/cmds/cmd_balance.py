@@ -3,15 +3,24 @@
 
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
-
+  
+  Script to balance the datasets by applying the following algorithms,
+      - Synthetic Minority Over-sampling Technique (SMOTE)
+      - Adaptive Synthetic (ADASYN)
+      - Random over-sampling
+      - Local Outlier Factor
+      - Isolation Forest
 """
 
-import sys
 import pandas as pd
 from lib.balance import traditional_balance, novelty_balance
 
 
 def balance(args):
+    """
+    :param args: the arguments parsed from the command line interface
+    :return: the balanced dataset
+    """
     if not args.outfile:
         print("Warning: Balancing data without an outfile is useless...")
 

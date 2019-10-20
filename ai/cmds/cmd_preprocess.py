@@ -3,10 +3,13 @@
 
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
-
+  
+  Script to preprocess datasets by,
+    - dropping columns
+    - adding vicmap coordinates
+    - adding environmental data from provided vector and rastor files
 """
 
-import sys
 import pandas as pd
 
 from lib.transform import add_vic_coordinates
@@ -16,6 +19,10 @@ from lib.add_env_data import add_columns
 
 
 def preprocess(args):
+    """
+    :param args: the arguments parsed from the command line interface
+    :return: the preprocessed dataset
+    """
     if not args.outfile:
         print("Warning: Preprocessing data without an outfile is useless...")
 
