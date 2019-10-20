@@ -4,6 +4,8 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  Script containing method to convert geographical coordinates to and from (latitude, longitude)
+   to vicmap coordinates
 """
 
 from osgeo import ogr, osr, gdal
@@ -21,6 +23,11 @@ VM2LLTransform = osr.CoordinateTransformation(vicmap, latlong)
 
 
 def latlong2vicmap(coords):
+    """
+    Method to convert latitude, longitude to vicmap coordinates
+    :param coords: latitude, longitude to be vicmap coordinates
+    :return: the converted vicmap coordinates
+    """
     geo = ogr.Geometry(ogr.wkbPoint)
     geo.AddPoint(coords[0], coords[1])
 
@@ -31,6 +38,11 @@ def latlong2vicmap(coords):
 
 
 def vicmap2latlong(coords):
+    """
+    Method to convert vicmap coordinates to latitude longtitude
+    :param coords: the vicmap coordinates to be converted to lat lng
+    :return: the converted lat lng
+    """
     geo = ogr.Geometry(ogr.wkbPoint)
     geo.AddPoint(coords[0], coords[1])
 
@@ -41,6 +53,11 @@ def vicmap2latlong(coords):
 
 
 def add_vic_coordinates(data):
+    """
+    Method to add vicmap coordinates columns to the dataset
+    :param data: dataframe to be updated with vicmap coordinates
+    :return: dataframe updated with the vicmap coordinates
+    """
     # data = pandas dataframe object
     data[["vic_x", "vic_y"]] = data.apply(
         lambda row: pd.Series(latlong2vicmap((row["latitude"], row["longitude"]))),

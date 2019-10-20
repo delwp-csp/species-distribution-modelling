@@ -4,6 +4,12 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  Script to balance the datasets by applying the following algorithms,
+      - Synthetic Minority Over-sampling Technique (SMOTE)
+      - Adaptive Synthetic (ADASYN)
+      - Random over-sampling
+      - Local Outlier Factor
+      - Isolation Forest
 """
 
 import sys
@@ -20,6 +26,11 @@ from lib.add_env_data import add_columns
 
 
 def prep_data(data):
+    """
+    Method to drop columns
+    :param data: dataset to be prepped for balancing
+    :return: dataset and the reliability values
+    """
     return (
         data.drop(columns=["is_reliable", "longitude", "latitude", "vic_x", "vic_y"]),
         data.is_reliable,
@@ -30,6 +41,12 @@ methods = {"random": RandomOverSampler, "smote": SMOTE, "adasyn": ADASYN}
 
 
 def traditional_balance(dataset, method):
+    """
+    Method that balances the dataset using the given algorithm -- random, smote, adasyn
+    :param dataset: dataset to be balanced
+    :param method: method to be used to balance the dataset
+    :return: balanced dataset
+    """
     data, reliable = prep_data(dataset)
 
     if method in methods:
@@ -40,6 +57,12 @@ def traditional_balance(dataset, method):
 
 
 def novelty_balance(dataset, method):
+    """
+    Method that balances the dataset using the given novelty-based algorithm -- lof, isolation forest
+    :param dataset: dataset to be balanced
+    :param method: method to be used to balance the dataset
+    :return: balanced dataset
+    """
     bal = None
     if method == "lof":
         bal = LocalOutlierFactor(n_neighbors=20, novelty=True, contamination="auto")

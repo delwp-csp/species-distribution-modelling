@@ -4,6 +4,8 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  Script to add environment data by parsing the provided raster and vector datasets
+
 """
 
 import sys
@@ -23,6 +25,12 @@ except:
 
 
 def get_raster_data(data, fname):
+    """
+    Method to get the raster data
+    :param data: dataframe to be update with the raster data
+    :param fname: name of the raster file
+    :return: dataframe updated with env data from the raster file
+    """
     column = Path(fname).stem
     rp = raster.RasterProcessor(fname)
     bands_count = rp.data_source.RasterCount
@@ -35,7 +43,13 @@ def get_raster_data(data, fname):
 
 
 def process_file(data, ftype, fname):
-
+    """
+    Method that delegates the column processing by calling the function for raster or vector file
+    :param data: dataframe that needs to be updated
+    :param ftype: filetype of the dataset to get the env data
+    :param fname: filename of the dataset to get the env data
+    :return: dataframe updated with env data from the raster file
+    """
     if os.path.exists(fname):
         print("Processing: {}".format(fname), flush=True)
         if ftype == "raster":
@@ -81,7 +95,11 @@ data_files = [("raster", i) for i in raster_files] + [
 
 
 def add_columns(data):
-
+    """
+    Method to parallelise adding columns
+    :param data: dataframe which needs to be processed
+    :return: updated dataframe with all the env data
+    """
     pool = Pool()
     sections = pool.starmap(process_file, [(data, x[0], x[1]) for x in data_files])
     result = pd.concat([i for i in sections if not i is None], axis=1)

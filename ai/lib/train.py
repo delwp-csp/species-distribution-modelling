@@ -4,6 +4,7 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  Script to train the dataset and create a model
 """
 
 from sklearn.neural_network import MLPClassifier
@@ -35,6 +36,13 @@ methods = {
 
 
 def train_model(dataset, is_reliable, method):
+    """
+    Method to train the dataset
+    :param dataset: dataset to be trained
+    :param is_reliable: the reliabilities, i.e. y values
+    :param method: the algorithm for training the model
+    :return: trained model
+    """
     for drop_column in ["is_reliable", "vic_x", "vix_y", "latitude", "longitude"]:
         if drop_column in dataset.columns:
             dataset = dataset.drop(columns=[drop_column])
@@ -48,6 +56,12 @@ def train_model(dataset, is_reliable, method):
 
 
 def predict_model(dataset, model):
+    """
+    Method to predict reliability of dataset using the provided model
+    :param dataset: dataset whose reliability is to be predicted
+    :param model: model to be used to predict reliability
+    :return: the reliabilities of the dataset
+    """
     for drop_column in ["is_reliable", "vic_x", "vix_y", "latitude", "longitude"]:
         if drop_column in dataset.columns:
             dataset = dataset.drop(columns=[drop_column])

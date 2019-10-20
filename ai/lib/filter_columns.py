@@ -4,6 +4,7 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  Script to filter columns,
 """
 
 import sys
@@ -19,18 +20,24 @@ except:
 
 
 def is_reliable(row):
-    # print(row['RELIABILITY'])
-    # print(row['RATING_INT'])
-    # print(row)
+    """
+    Method that operates on row combine multiple reliability columns into one
+    :param row: A row of the dataset
+    :return: An integer value stating the reliability of the row
+    """
     isReliable = not (
         row["RELIABILITY"] in (np.nan, "Unconfirmed") and row["RATING_INT"] in (2, 4)
     )
-    # if not isReliable:
-    #    print("BINGO")
+
     return int(isReliable)
 
 
 def filter_columns(data):
+    """
+    Method to filter dataset's columns by dropping, renaming and merging them
+    :param data: dataset whose columns are to be filtered
+    :return: dataset with filtered columns
+    """
     COLUMNS_TO_KEEP = ["is_reliable", "latitude", "longitude"]
     data["is_reliable"] = data.apply(is_reliable, axis=1)
     return data.rename(

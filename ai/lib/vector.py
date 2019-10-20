@@ -4,6 +4,7 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
+  Script containing the class to process vector files to get environment data
 """
 
 from osgeo import ogr, osr, gdal
@@ -12,6 +13,11 @@ import pandas as pd
 
 
 def conv_to_point(row):
+    """
+    Method to create a point series from vic coordinates
+    :param row: dataset's row to be updated
+    :return: the point series
+    """
     geo = ogr.Geometry(ogr.wkbPoint)
     geo.AddPoint(int(row["vic_x"]), int(row["vic_y"]))
     geo.InShape = False
@@ -19,6 +25,12 @@ def conv_to_point(row):
 
 
 def ProcessPoints(dataframe, fname):
+    """
+    Method to process vector dataset's points and update the dataframe
+    :param dataframe: dateframe to be update with the vector file's env data
+    :param fname: vector file containing the env data
+    :return: updated dataframe with vector file's env data
+    """
     shapefile = ogr.Open(fname)
     layer = shapefile.GetLayer()
 
