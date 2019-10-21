@@ -4,7 +4,7 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
-  Script to train the dataset and create a model
+  Script that delegates to lib/train.py to train the dataset and create a model
 """
 
 import pandas as pd

@@ -18,22 +18,19 @@ class RasterProcessor:
 		Method to initialise the processor for a given raster dataset
 		:param fname: filename of the raster dataset for which the proessor is to be initialised
 		"""
-		bn = basename(fname)
-		# print("Opening {}...".format(fname))
-		self.data_source = gdal.Open(fname)
-		# print("{} has {} band(s)".format(bn, self.data_source.RasterCount))
 
+		# retrieving values from all the raster bands
+		self.data_source = gdal.Open(fname)
 		self.bands = [
 			self.data_source.GetRasterBand(band)
 			for band in range(1, self.data_source.RasterCount + 1)
 		]
 
+		# if min or max is none, call a function that returns min, max, mean, std dev
 		if self.bands[0].GetMinimum() is None or self.bands[0].GetMaximum() is None:
-			# 	print("Computing statistics for {}".format(bn))
 			self.bands[0].ComputeStatistics(0)
 
-		# print("{} is {}x{}".format(bn, self.data_source.RasterXSize, self.data_source.RasterYSize))
-
+		# fetch the affine transformation coefficients
 		self.geo_transform = self.data_source.GetGeoTransform()
 
 	def GetValueAt(self, x, y, bandIndex=0):
