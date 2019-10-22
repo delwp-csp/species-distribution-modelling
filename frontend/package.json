@@ -9,6 +9,7 @@
     "material-ui": "^0.20.2",
     "material-ui-dropzone": "^2.4.1",
     "moment": "^2.24.0",
+    "nock": "^11.4.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
@@ -38,7 +39,6 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react": "^9.3.0",
-    "superagent-mocker": "^0.5.2"
+    "@testing-library/react": "^9.3.0"
   }
 }

@@ -17,7 +17,6 @@ export class CardList extends React.Component {
 
   render() {
     const { history, species } = this.props
-
     return (
       <div className="card-list">
         {species.length === 0 && (

@@ -17,32 +17,34 @@ class Home extends Component {
     super()
     this.state = {
       species: [],
-      serverRunning: true
+      serverRunning: null
     }
   }
 
   componentDidMount() {
-    superagent("get", "./get_data")
-      .then(data => this.setState({ species: data.body }))
-      .catch(err =>
+    superagent("get", "/get_data")
+      .then(data => this.setState({ species: data.body, serverRunning: true }))
+      .catch(err => {
         this.setState({ serverRunning: false })
-      )
+      })
   }
 
   render() {
     if (this.state.serverRunning) {
       return (
         <div className="home">
-          <h1 className="page-title">DWELP Species Modelling</h1>
+          <h1 className="page-title">DELWP Species Modelling</h1>
           <div
             className="button-container"
             onClick={() => this.props.history.push("/add-species")}
           >
             <Button buttonText="Add new species →" />
           </div>
-          <CardList speices={this.state.species}/>
+          <CardList species={this.state.species}/>
         </div>
       )
+    } else if (this.state.serverRunning === null) {
+      return <h1>Loading...</h1>
     } else {
       return <h1>The server is not responding</h1>
     }
