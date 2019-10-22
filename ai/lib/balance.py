@@ -27,7 +27,9 @@ from lib.add_env_data import add_columns
 
 def prep_data(data):
     """
-    Method to drop columns
+    Method to drop the following columns,
+        - is_reliable, since that's the y-values we aim to predict
+        - lat, lng and vic coordinates since we're already getting the env data from those
     :param data: dataset to be prepped for balancing
     :return: dataset and the reliability values
     """

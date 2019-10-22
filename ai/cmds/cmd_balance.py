@@ -4,7 +4,7 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
   
-  Script to delegate the balancing of the datasets by applying the following algorithms,
+  Script to delegate the balancing, by calling lib/balance.py, of the datasets by applying the following algorithms,
       - Synthetic Minority Over-sampling Technique (SMOTE)
       - Adaptive Synthetic (ADASYN)
       - Random over-sampling

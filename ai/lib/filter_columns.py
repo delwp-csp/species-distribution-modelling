@@ -4,7 +4,8 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
-  Script to filter columns,
+  Script to filter columns to drop the unwanted column, rename the existing columns
+  for legibility and merge the multiple reliability columns into a single one.
 """
 
 import sys
@@ -48,7 +49,7 @@ def filter_columns(data):
 # sv record count, record type
 
 if __name__ == "__main__":
-    data = pd.read_csv("../dataset/Agile_Antechinus.csv")
+    data = pd.read_csv("../../dataset/Agile_Antechinus.csv")
     print(data.columns)
 
     ndata = filter_columns(data)

@@ -4,7 +4,7 @@
   FIT3162 - Team 10 - Final Year Computer Science Project
   Copyright Luke Silva, Aichi Tsuchihira, Harsil Patel 2019
 
-  Script to train the dataset and test the reliability of the trained models
+  Script that delegates to lib/train.py to train the dataset and test the reliability of the trained models
 
 """
 
@@ -31,9 +31,11 @@ scores = [
 
 def test_train(args):
     """
+    Method to split the dataset into training and testing data in the
+    ratio 9:1 to train the model and predict the accuracy, to help choose
+    most accurate model to predict reliability of the species
     :param args: the arguments parsed from the command line interface
     """
-    # todo: integrate predict command and drop commands
 
     dataset = pd.read_csv(args.infile, index_col=0)
     y = dataset.is_reliable
