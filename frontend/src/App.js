@@ -11,23 +11,21 @@ import Home from "./pages/home"
 import AddSpecies from "./pages/add-species"
 import Report from "./pages/report"
 import Predict from "./pages/predict"
-import { HashRouter, Switch, Route } from "react-router-dom"
+import { Switch, Route } from "react-router-dom"
 
 
 function App() {
   return (
     <div className="App">
-      <HashRouter>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/add-species" component={AddSpecies} />
-          <Route path="/report/:specie_name" component={Report} />
-          <Route
-            path="/predict/:specie_name/:balancer/:model"
-            component={Predict}
-          />
-        </Switch>
-      </HashRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/add-species" component={AddSpecies} />
+        <Route path="/report/:specie_name" component={Report} />
+        <Route
+          path="/predict/:specie_name/:balancer/:model"
+          component={Predict}
+        />
+      </Switch>
     </div>
   )
 }

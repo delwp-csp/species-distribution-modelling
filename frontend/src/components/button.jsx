@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function CustomButton({ buttonText, onClick }) {
+export default function CustomButton({ buttonText, onClick, ...props}) {
   const classes = useStyles()
 
   return (
@@ -39,6 +39,7 @@ export default function CustomButton({ buttonText, onClick }) {
         color="primary"
         className={classes.button}
         onClick={onClick}
+        {...props}
       >
         {buttonText}
       </Button>

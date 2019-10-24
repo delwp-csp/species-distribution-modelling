@@ -21,7 +21,7 @@ it('Renders correctly with no species', async () => {
     scope.done()
 })
 
-it('Renders correctly with a species species', async () => {
+it('Renders correctly with 1 specie', async () => {
     const scope = nock('http://localhost').get('/get_data').reply(200, [
         {
             scientific_name: "SName",

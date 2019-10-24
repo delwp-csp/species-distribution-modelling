@@ -24,27 +24,25 @@ class Add_Species extends Component {
       scientific_name: "",
       common_name: "",
       description: "",
-      files: null
+      files: []
     }
   }
 
   submitPost = () => {
     let { history } = this.props
-    let specieName = this.state.scientific_name.replace(" ", "_").toLowerCase()
+    let specieName = this.state.scientific_name.replace(/ /g, '_').toLowerCase()
     history.push("/")
     superagent("post", "/")
       .send({
         scientific_name: specieName,
         common_name: this.state.common_name,
         description: this.state.description
-      })
-      .then(data => {
-        console.log("The server has recieved", data.body)
-      })
+      }).then(() => {})
+    
     superagent("post", "/upload")
       .attach("file", this.state.files[0])
-      .set("specieName", `${this.state.scientific_name}`)
-      .then(res => console.log(res))
+      .set("specieName", specieName)
+      .then(() => {})
   }
 
   handleChange = event => {
@@ -90,7 +88,7 @@ class Add_Species extends Component {
           />
         </div>
         <div className="button-container" onClick={this.submitPost}>
-          <Button buttonText="Save" />
+          <Button disabled={this.state.files.length===0} buttonText="Save" />
         </div>
       </div>
     )
