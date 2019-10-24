@@ -7,3 +7,8 @@ conda create -n gdal -c conda-forge gdal tiledb=1.6.0 scikit-learn imbalanced-le
 ```
 
 Then whenever you want to run gdal, use `conda activate gdal`
+
+
+# Running unit tests
+
+`python3 -m unittest discover`

@@ -12,7 +12,7 @@ from os.path import basename
 
 
 class RasterProcessor:
-	# fname must be a .ers file
+	# fname should be a .ers file
 	def __init__(self, fname):
 		"""
 		Method to initialise the processor for a given raster dataset
