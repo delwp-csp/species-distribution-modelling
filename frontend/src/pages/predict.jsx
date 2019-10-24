@@ -30,6 +30,7 @@ class Predict extends Component {
         params: { specie_name, balancer, model }
       }
     } = this.props
+    
     history.push("/")
     superagent("post", "/predict")
       .attach("file", this.state.files[0])
@@ -37,7 +38,7 @@ class Predict extends Component {
       .set("balancer", balancer)
       .set("model", model)
       .set("name", this.state.name)
-      .then(res => console.log(res))
+      .then(() => {})
   }
 
   handleChange = event => {
@@ -50,7 +51,7 @@ class Predict extends Component {
   }
 
   render() {
-    console.log(this.state.files)
+
     return (
       <div className="add-species">
         <h1>Predict new data</h1>

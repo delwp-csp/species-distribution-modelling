@@ -120,7 +120,6 @@ class Report extends React.Component {
         <Tabs
           value={tab}
           onChange={(e, value) => this.setState({ tab: value })}
-          aria-label="simple tabs example"
         >
           <Tab label="Models" />
           <Tab label="Predictions" />
