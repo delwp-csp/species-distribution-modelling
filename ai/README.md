@@ -6,9 +6,8 @@ Run the following to install the packages
 conda create -n gdal -c conda-forge gdal tiledb=1.6.0 scikit-learn imbalanced-learn matplotlib matplotlib-base mpl_sample_data pandas
 ```
 
-Then whenever you want to run gdal, use `conda activate gdal`
+Then whenever you want to run any of the python code, use `conda activate gdal`
 
 
 # Running unit tests
-
-`python3 -m unittest discover`
+Run the following command to run the unit tests: `python3 -m unittest discover`
