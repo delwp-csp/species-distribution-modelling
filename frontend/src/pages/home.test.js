@@ -8,7 +8,7 @@ import nock from 'nock'
 it('Renders correctly with no species', async () => {
     const scope = nock('http://localhost').get('/get_data').reply(200, [])
 
-    const { getByText, queryByText } = render(
+    const { getByText, queryByText, debug } = render(
         <MemoryRouter>
             <Home/>
         </MemoryRouter>
@@ -16,6 +16,8 @@ it('Renders correctly with no species', async () => {
     
     await wait(() => getByText('DELWP Species Modelling'))
     
+    expect(queryByText("DELWP Species Modelling")).not.toBeNull()
+    expect(queryByText("Add new species →")).not.toBeNull()
     expect(queryByText("No specie has been added")).not.toBeNull()
 
     scope.done()
@@ -37,10 +39,10 @@ it('Renders correctly with 1 specie', async () => {
     )
     
     await wait(() => getByText('DELWP Species Modelling'))
-    
+    expect(queryByText("Add new species →")).not.toBeNull()
     expect(queryByText("SNAME")).not.toBeNull()
     expect(queryByText("This is a description")).not.toBeNull()
-
+    expect(queryByText("No specie has been added")).toBeNull()
     scope.done()
 })
 
